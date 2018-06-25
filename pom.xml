@@ -7,17 +7,11 @@
 	<version>1.0.0</version>
 
 	<dependencies>
-
-
-
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
 			<version>3.5.2</version>
 		</dependency>
-
-
-
 	</dependencies>
 
 	<build>
