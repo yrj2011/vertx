@@ -1,7 +1,9 @@
 package com.stu.vertx.hello;
 
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 
 /**
@@ -19,7 +21,7 @@ public class MyHttpServer {
 		// 创建一个HttpServer
 		HttpServer server = vertx.createHttpServer();
 		
-		server.requestHandler(request -> {
+		server.requestHandler(request-> {
 			// 获取到response对象
 			HttpServerResponse response = request.response();
 			
