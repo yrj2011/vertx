@@ -1,5 +1,6 @@
 package com.stu.vertx.route;
 
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
@@ -8,29 +9,38 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 
-public class MyHttpServerWithRoute {
+/**
+ * Vertx的路由，需要引入Vertx-Web模块
+ * 
+ * @author lenovo
+ *
+ */
+public class HttpServerWithRoute extends AbstractVerticle {
 
-	public static void main(String[] args) {
+	@Override
+	public void start() throws Exception {
 
-		Vertx vertx = Vertx.vertx();
+		// 创建一个HttpServer
 		HttpServer server = vertx.createHttpServer();
 
-		Router router = Router.router(vertx); // 创建路由对象
+		// 创建路由对象
+		Router router = Router.router(vertx); 
 
+		// 这里可以处理post请求的body体数据
 		router.route().handler(BodyHandler.create());
 
 		// 创建路由规则，当在浏览器中输入 localhost:8888/index时匹配
-router.route("/index/*").order(2).handler(request -> {
-//			request.response().end("Index");
-	System.out.println(1);
-	request.next(); // 调下一个匹配规则
-});
+		router.route("/index/*").order(2).handler(request -> {
+			// request.response().end("Index");
+			System.out.println(1);
+			request.next(); // 调下一个匹配规则
+		});
 
-router.route("/index/main").order(-1).handler(request -> {
-//			request.response().end("IndexMain");
-	System.out.println("2");
-	request.next(); // 调下一个匹配规则
-});
+		router.route("/index/main").order(-1).handler(request -> {
+			// request.response().end("IndexMain");
+			System.out.println("2");
+			request.next(); // 调下一个匹配规则
+		});
 
 		// 通过route的参数限定请求的方法
 		router.route(HttpMethod.GET, "/method").handler(request -> {
@@ -74,7 +84,12 @@ router.route("/index/main").order(-1).handler(request -> {
 				router.accept(event);
 			}
 		});
-		server.listen(8888);
+		server.listen(8881);
+	}
+
+	public static void main(String[] args) {
+		Vertx vertx = Vertx.vertx();
+		vertx.deployVerticle(new HttpServerWithRoute());
 	}
 
 }
