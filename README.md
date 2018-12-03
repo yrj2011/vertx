@@ -26,13 +26,23 @@
 
 FirstVerticle是服务的提供者，提供一个sayHello方法
 
-ListenerVerticle监听浏览器的请求，然后通过EventBus调用服务，并相应数据
+ListenerVerticle监听浏览器的请求，然后通过EventBus调用服务，并响应数据
+
+* com.stu.vertx.jdbc
+
+这里主要演示的是vertx整合jdbc，操作数据库
+
+* com.stu.core.cache
+
+使用vertx缓存
 
 ## 常见问题
 
 * ServiceVertxEBProxy 这个类找不到，开发工具提示错误
 
-这个类是通过Vertx的CodeGenerate生成的代理类，在pom.xml中进行配置，如下：
+这个类是通过Vertx的CodeGenerate生成的代理类，需要使用mvn install来触发代码生成工具来生成此类。如果执行了mvn install之后依然没有，可以按以下步骤检验：
+
+1.在pom.xml中进行配置，如下：
 
 ```xml
 <plugin>
@@ -56,6 +66,24 @@ ListenerVerticle监听浏览器的请求，然后通过EventBus调用服务，并相应数据
 </plugin>
 ```
 
-我所配置的路径在 src/main/generated下
+我所配置的路径在 src/main/generated下，如果使用eclipse，可以将这个路径配置到classpath下。
+
+2.检查Service接口是否使用注解
+
+```java
+@ProxyGen
+@VertxGen
+```
+
+3. 检查package-info.java是否正确
+
+```java
+@ModuleGen(groupPackage = "com.stu.vertx.cluster.service.hello", name = "FirstVerticle")
+package com.stu.vertx.cluster.service.hello;
+
+import io.vertx.codegen.annotations.ModuleGen;
+```
+
+
 
 
