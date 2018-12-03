@@ -28,5 +28,34 @@ FirstVerticle是服务的提供者，提供一个sayHello方法
 
 ListenerVerticle监听浏览器的请求，然后通过EventBus调用服务，并相应数据
 
+## 常见问题
+
+* ServiceVertxEBProxy 这个类找不到，开发工具提示错误
+
+这个类是通过Vertx的CodeGenerate生成的代理类，在pom.xml中进行配置，如下：
+
+```xml
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-compiler-plugin</artifactId>
+	<version>3.1</version>
+	<configuration>
+		<source>1.8</source>
+		<target>1.8</target>
+		<encoding>UTF-8</encoding>
+		<annotationProcessors>
+			<annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+		</annotationProcessors>
+		<generatedSourcesDirectory>
+			${project.basedir}/src/main/generated
+		</generatedSourcesDirectory>
+		<compilerArgs>
+			<arg>-AoutputDirectory=${project.basedir}/src/main</arg>
+		</compilerArgs>
+	</configuration>
+</plugin>
+```
+
+我所配置的路径在 src/main/generated下
 
 
