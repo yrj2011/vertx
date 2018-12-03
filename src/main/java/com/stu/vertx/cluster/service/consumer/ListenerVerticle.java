@@ -21,20 +21,24 @@ public class ListenerVerticle extends AbstractVerticle {
 		HttpServer httpServer = vertx.createHttpServer();
 
 		httpServer.requestHandler(request -> {
+			
 			// 获取到response对象
 			HttpServerResponse response = request.response();
 
 			// 设置响应头
 			response.putHeader("Content-type", "text/html;charset=utf-8");
 
+			// 通过配置action参数，指定要走哪一个方法
 			DeliveryOptions options = new DeliveryOptions();
 			options.addHeader("action", "sayHello");
 			
+			// 这个是给方法传入的参数
 			JsonObject config = new JsonObject();
 			config.put("ETF", new JsonObject().put("name", "xiaoming"));
 			config.put("name", "xiaozhang");
 
-			vertx.eventBus().<JsonObject>send("service", config, options, res -> {
+			// 通过eventBus调用方法
+			vertx.eventBus().<JsonObject>send("service.demo.firstverticle", config, options, res -> {
 				// 响应数据
 				response.end(res.result().body().getString("msg"));
 			});

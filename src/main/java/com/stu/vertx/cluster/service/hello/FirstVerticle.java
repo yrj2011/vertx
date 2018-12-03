@@ -12,6 +12,8 @@ import io.vertx.serviceproxy.ServiceBinder;
  *
  */
 public class FirstVerticle extends AbstractVerticle {
+	
+	public static final String address = "service.demo.firstverticle";
 
 	public static void main(String[] args) {
 
@@ -27,7 +29,7 @@ public class FirstVerticle extends AbstractVerticle {
 	@Override
 	public void start() throws Exception {
 		Service s = new ServiceImpl(vertx);
-		new ServiceBinder(vertx).setAddress("service").register(Service.class, s);
+		new ServiceBinder(vertx).setAddress(address).register(Service.class, s);
 		// ProxyHelper.registerService(Service.class, vertx, s, "");
 	}
 
