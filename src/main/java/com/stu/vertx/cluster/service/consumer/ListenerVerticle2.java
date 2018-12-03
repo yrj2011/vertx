@@ -1,9 +1,10 @@
 package com.stu.vertx.cluster.service.consumer;
 
+import com.stu.vertx.cluster.service.hello.Service;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
@@ -11,16 +12,14 @@ import io.vertx.core.json.JsonObject;
 /**
  * 监听http请求，并调用verticle来处理请求
  * 
- * 调用其他的微服务组件，有两种方式，第一种是通过EventBus的形式来实现，本例中就是如此。
+ * 调用其他的微服务组件，有两种方式，第一种是通过EventBus的形式来实现。
  * 
- * 这种调用方式不依赖任何的接口，可以实现跨编程语言调用
- * 
- * 还有一种调用方式，通过ListenerVerticle2演示
+ * 还有一种调用方式，通过Service接口中提供的静态方法来调用，这种调用使用更方便，但通用性不好，不能够跨编程语言调用
  * 
  * @author lenovo
  *
  */
-public class ListenerVerticle extends AbstractVerticle {
+public class ListenerVerticle2 extends AbstractVerticle {
 
 	@Override
 	public void start() throws Exception {
@@ -34,19 +33,10 @@ public class ListenerVerticle extends AbstractVerticle {
 			// 设置响应头
 			response.putHeader("Content-type", "text/html;charset=utf-8");
 
-			// 通过配置action参数，指定要走哪一个方法
-			DeliveryOptions options = new DeliveryOptions();
-			options.addHeader("action", "sayHello");
-
-			// 这个是给方法传入的参数
-			JsonObject config = new JsonObject();
-			config.put("ETF", new JsonObject().put("name", "xiaoming"));
-			config.put("name", "xiaozhang");
-
-			// 通过eventBus调用方法
-			vertx.eventBus().<JsonObject>send("service.demo.firstverticle", config, options, res -> {
-				// 响应数据
-				response.end(res.result().body().getString("msg"));
+			// 直接创建代理类，这样调用需要使用具体的接口，而且只能是同类语言才能调用，第一种方式可以实现跨语言调用
+			Service s = Service.createProxy(vertx, "");
+			s.sayHello("", new JsonObject(), res -> {
+				response.end(res.result().getString("msg"));
 			});
 
 		});
@@ -60,7 +50,7 @@ public class ListenerVerticle extends AbstractVerticle {
 		options.setClusterHost("192.168.101.123");
 		Vertx.clusteredVertx(options, resultHandler -> {
 			Vertx vertx = resultHandler.result();
-			vertx.deployVerticle(new ListenerVerticle());
+			vertx.deployVerticle(new ListenerVerticle2());
 		});
 	}
 
