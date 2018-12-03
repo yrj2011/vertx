@@ -20,5 +20,13 @@
 
 使用消息总线实现基本的发布，订阅模型
 
+* com.stu.vertx.cluster.service
+
+这里模拟一个完整的微服务的架构，每个Verticle可以做为单独的部署单元，服务间会互相发现，通过EventBus进行通信
+
+FirstVerticle是服务的提供者，提供一个sayHello方法
+
+ListenerVerticle监听浏览器的请求，然后通过EventBus调用服务，并相应数据
+
 
 
