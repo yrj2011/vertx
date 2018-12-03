@@ -28,7 +28,7 @@ public class FirstVerticle extends AbstractVerticle {
 
 	@Override
 	public void start() throws Exception {
-		Service s = new ServiceImpl(vertx);
+		Service s = Service.create(vertx);
 		new ServiceBinder(vertx).setAddress(address).register(Service.class, s);
 		// ProxyHelper.registerService(Service.class, vertx, s, "");
 	}
