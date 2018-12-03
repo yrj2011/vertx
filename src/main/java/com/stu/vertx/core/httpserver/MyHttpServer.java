@@ -1,4 +1,4 @@
-package com.stu.vertx.httpserver;
+package com.stu.vertx.core.httpserver;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;

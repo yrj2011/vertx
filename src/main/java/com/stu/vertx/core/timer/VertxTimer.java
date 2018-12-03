@@ -1,4 +1,4 @@
-package com.stu.vertx.timer;
+package com.stu.vertx.core.timer;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;

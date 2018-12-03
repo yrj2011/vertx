@@ -1,4 +1,4 @@
-package com.stu.vertx.eventbus;
+package com.stu.vertx.core.eventbus;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;

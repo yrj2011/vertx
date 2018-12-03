@@ -1,4 +1,4 @@
-package com.stu.vertx.route;
+package com.stu.vertx.web.route;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
