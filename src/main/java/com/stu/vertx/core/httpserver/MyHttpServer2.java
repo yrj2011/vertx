@@ -19,10 +19,11 @@ import io.vertx.core.http.HttpServerResponse;
 public class MyHttpServer2 extends AbstractVerticle {
 
 	public static void main(String[] args) {
+		// 创建服务
 		Verticle verticle = new MyHttpServer2();
 		Vertx vertx = Vertx.vertx();
 
-		// 部署verticle
+		// 部署服务，会调用服务的start方法
 		vertx.deployVerticle(verticle);
 	}
 
