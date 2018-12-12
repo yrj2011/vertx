@@ -26,7 +26,7 @@ public class TcpClient extends AbstractVerticle {
 				NetSocket s = conn.result();
 				// 向服务器写数据
 				s.write(Buffer.buffer("hello"));
-				
+
 				// 读取服务器的响应数据
 				s.handler(buffer -> {
 					System.out.println(buffer.toString());
