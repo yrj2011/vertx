@@ -41,6 +41,7 @@ public class HttpServerWithRoute extends AbstractVerticle {
 			System.out.println("2");
 			request.next(); // 调下一个匹配规则
 		});
+		
 
 		// 通过route的参数限定请求的方法
 		router.route(HttpMethod.GET, "/method").handler(request -> {
