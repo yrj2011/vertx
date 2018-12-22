@@ -17,14 +17,17 @@ public class AuthTest extends AbstractVerticle {
 	@Override
 	public void start() throws Exception {
 
-		AuthProvider provider = new UserNameAndPasswrodProvider();
-		JsonObject authInfo = new JsonObject().put("username", "xiaoming").put("password", "123456");
+	    // 创建认证的Provider
+		AuthProvider provider = new UserNameAndPasswordProvider();
+		JsonObject authInfo = new JsonObject().put("username", "admin").put("password", "admin");
 
 		// 调用认证方法，将认证的数据传入
 		provider.authenticate(authInfo, res -> {
 			if (res.succeeded()) {
 				// 认证通过，可以获取到User对象，通过User对象可以进行权限校验
 				User user = res.result();
+
+				// 授权
 				user.isAuthorized("save:user", auth -> {
 					if (auth.succeeded()) {
 						System.out.println("授权成功");
