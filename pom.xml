@@ -5,7 +5,7 @@
 	<groupId>com.stu.vertx</groupId>
 	<artifactId>stu-vertx</artifactId>
 	<version>1.0.0</version>
-	
+
 	<properties>
 		<vertx.version>3.5.4</vertx.version>
 	</properties>
@@ -47,6 +47,17 @@
 			<artifactId>vertx-jdbc-client</artifactId>
 			<version>${vertx.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-auth-jdbc</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-redis-client</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
