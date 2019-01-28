@@ -4,7 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.stu.vertx</groupId>
 	<artifactId>stu-vertx</artifactId>
+	<packaging>pom</packaging>
 	<version>1.0.0</version>
+	<modules>
+		<module>vertx-book-demo</module>
+        <module>vertx-blog-demo</module>
+    </modules>
 
 	<properties>
 		<vertx.version>3.5.4</vertx.version>
@@ -14,6 +19,11 @@
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-lang-js</artifactId>
 			<version>${vertx.version}</version>
 		</dependency>
 		<dependency>
