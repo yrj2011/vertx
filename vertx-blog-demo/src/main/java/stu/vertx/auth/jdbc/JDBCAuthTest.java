@@ -1,6 +1,6 @@
 package stu.vertx.auth.jdbc;
 
-import com.stu.vertx.jdbc.JdbcUtils;
+import stu.vertx.jdbc.JdbcUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
