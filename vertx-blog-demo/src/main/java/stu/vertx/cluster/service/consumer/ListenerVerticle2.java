@@ -1,6 +1,6 @@
 package stu.vertx.cluster.service.consumer;
 
-import com.stu.vertx.cluster.service.hello.Service;
+import stu.vertx.cluster.service.hello.Service;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
