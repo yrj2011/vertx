@@ -12,5 +12,5 @@ server.on("request", function(req, resp) {
 
 // 监听请求，并在启动成功之后，打印Server run Success
 server.listen(8080, () => {
-    console.log("Server Run Success.")
+    console.log("Server Run Success.");
 });
