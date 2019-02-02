@@ -3,6 +3,7 @@ package stu.vertx.auth.shiro;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.shiro.ShiroAuth;
 import io.vertx.ext.auth.shiro.ShiroAuthOptions;
 import io.vertx.ext.auth.shiro.ShiroAuthRealmType;
@@ -26,6 +27,14 @@ public class ShiroAuthVerticle extends AbstractVerticle {
         provider.authenticate(data, auth -> {
             if (auth.succeeded()) {
                 System.out.println("认证成功");
+                User user = auth.result();
+                user.isAuthorized("role:manager",res->{
+                    if(res.result()) {
+                        System.out.println("授权成功");
+                    } else {
+                        System.out.println("没有权限");
+                    }
+                });
             } else {
                 System.out.println("认证失败");
             }
