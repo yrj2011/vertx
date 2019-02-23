@@ -14,6 +14,7 @@ public class WebServer extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
 
+        // 处理get请求
         router.route("/get").handler(request -> {
             String username = request.request().getParam("username");
             String password = request.request().getParam("password");
@@ -23,11 +24,12 @@ public class WebServer extends AbstractVerticle {
             request.response().end("get request success");
         });
 
+        // 处理post请求
         router.post("/post").handler(request -> {
-            request.request().bodyHandler(body->{
+            request.request().bodyHandler(body -> {
                 System.out.println(body.toJsonObject().toString());
                 JsonObject responseData = new JsonObject()
-                        .put("msg","success");
+                        .put("msg", "success");
                 request.response().end(responseData.toString());
             });
         });

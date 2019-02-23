@@ -3,25 +3,21 @@ package stu.vertx.web.client;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.client.WebClient;
-import io.vertx.ext.web.client.WebClientOptions;
 
 /**
- * 以get方式发送一个简单的HTTPS请求
+ * 以get方式发送一个简单的HTTP请求
  *
  * @author kingh
  */
-public class WebClientHttpsGet extends AbstractVerticle {
+public class WebClientHttpGet2 extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
         // 创建WebClient，用于发送HTTP或者HTTPS请求
-        WebClientOptions webClientOptions = new WebClientOptions()
-                .setFollowRedirects(true)
-                ;
         WebClient webClient = WebClient.create(vertx);
         // 以get方式请求远程地址
-        webClient.postAbs("https://api.mch.weixin.qq.com/pay/unifiedorder")
-                .ssl(true)
+        webClient.get(80, "localhost", "/get")
+                .putHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0")
                 .send(handle -> {
                     // 处理响应的结果
                     if (handle.succeeded()) {
@@ -32,6 +28,6 @@ public class WebClientHttpsGet extends AbstractVerticle {
     }
 
     public static void main(String[] args) {
-        Vertx.vertx().deployVerticle(new WebClientHttpsGet());
+        Vertx.vertx().deployVerticle(new WebClientHttpGet2());
     }
 }
