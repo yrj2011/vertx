@@ -22,6 +22,9 @@ public class ResultHandler implements Handler<AsyncResult<Result>> {
     static {
         handlerMap.put(Result.JSON, new JsonResponser());
         handlerMap.put(Result.HTML, new HtmlResponser());
+        handlerMap.put(Result.STATIC, new HtmlResponser());
+        handlerMap.put(Result.FORWARD, new ForwardResponser());
+        handlerMap.put(Result.REDIRECT, new ForwardResponser());
     }
 
     public ResultHandler(RoutingContext context) {

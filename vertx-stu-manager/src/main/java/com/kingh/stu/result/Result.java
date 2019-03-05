@@ -10,6 +10,9 @@ public class Result {
     public static final String JSON = "JSON";
     public static final String XML = "XML";
     public static final String HTML = "HTML";
+    public static final String STATIC = "STATIC";
+    public static final String FORWARD = "FORWARD";
+    public static final String REDIRECT = "REDIRECT";
 
     private String type = "JSON";
     private String view;
@@ -34,6 +37,24 @@ public class Result {
         return new Result()
                 .setView(view)
                 .setType(HTML);
+    }
+
+    public static Result FORWARD(String view) {
+        return new Result()
+                .setView(view)
+                .setType(FORWARD);
+    }
+
+    public static Result REDIRECT(String view) {
+        return new Result()
+                .setView(view)
+                .setType(REDIRECT);
+    }
+
+    public static Result STATIC(String view) {
+        return new Result()
+                .setView(view)
+                .setType(STATIC);
     }
 
     public String getType() {

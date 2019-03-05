@@ -28,6 +28,7 @@ public class StuManagerStarter extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
+        router.route().handler(BodyHandler.create());
         router.route().handler(FaviconHandler.create());
         router.route().handler(CookieHandler.create());
         router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));

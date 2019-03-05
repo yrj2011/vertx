@@ -13,6 +13,10 @@ public class HtmlResponser implements ResponseHandler {
 
     @Override
     public void handle(Result result, RoutingContext context) {
+        if(Result.STATIC.equalsIgnoreCase(result.getType())) {
+            context.reroute(result.getView());
+            return;
+        }
         String page = result.getView();
         if(StringUtils.isBlank(page)) {
             page = "/404.html";
