@@ -7,31 +7,60 @@ package com.kingh.stu.result;
  */
 public class Result {
 
+    public static final String JSON = "JSON";
+    public static final String XML = "XML";
+    public static final String HTML = "HTML";
+
     private String type = "JSON";
     private String view;
     private Object data;
+
+    public Result() {
+    }
+
+    public static Result JSON(Object data) {
+        return new Result()
+                .setData(data)
+                .setType(JSON);
+    }
+
+    public static Result XML(Object data) {
+        return new Result()
+                .setData(data)
+                .setType(XML);
+    }
+
+    public static Result HTML(String view, Object data) {
+        return new Result()
+                .setData(data)
+                .setView(view)
+                .setType(HTML);
+    }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public Result setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getView() {
         return view;
     }
 
-    public void setView(String view) {
+    public Result setView(String view) {
         this.view = view;
+        return this;
     }
 
     public Object getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public Result setData(Object data) {
         this.data = data;
+        return this;
     }
 }

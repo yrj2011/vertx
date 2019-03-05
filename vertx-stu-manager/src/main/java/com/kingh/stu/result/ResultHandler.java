@@ -2,6 +2,7 @@ package com.kingh.stu.result;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
 import java.util.HashMap;
@@ -19,7 +20,8 @@ public class ResultHandler implements Handler<AsyncResult<Result>> {
     private static Map<String, ResponseHandler> handlerMap = new HashMap<>();
 
     static {
-        handlerMap.put("JSON", new JsonResponser());
+        handlerMap.put(Result.JSON, new JsonResponser());
+        handlerMap.put(Result.HTML, new HtmlResponser());
     }
 
     public ResultHandler(RoutingContext context) {
@@ -28,13 +30,15 @@ public class ResultHandler implements Handler<AsyncResult<Result>> {
 
     @Override
     public void handle(AsyncResult<Result> event) {
+        Result result = null;
         if (event.succeeded()) {
-            Result result = event.result();
-            String resType = result.getType().toUpperCase();
-            ResponseHandler responseHandler = handlerMap.get(resType);
-            responseHandler.handle(result, context);
+            result = event.result();
         } else {
             // 错误响应
+            result = Result.HTML("/500.html", new JsonObject().put("msg","服务器错误"));
         }
+        String resType = result.getType().toUpperCase();
+        ResponseHandler responseHandler = handlerMap.get(resType);
+        responseHandler.handle(result, context);
     }
 }

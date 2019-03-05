@@ -15,8 +15,6 @@ import java.util.HashMap;
  */
 public class JsonResponser implements ResponseHandler {
 
-    public static final String TYPE = "JSON";
-
     @Override
     public void handle(Result result, RoutingContext context) {
         HttpServerResponse response = context.request().response();
