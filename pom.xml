@@ -14,7 +14,7 @@
     </modules>
 
     <properties>
-        <vertx.version>3.5.4</vertx.version>
+        <vertx.version>3.6.3</vertx.version>
     </properties>
 
     <dependencies>
@@ -82,6 +82,11 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-auth-jwt</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-templ-freemarker</artifactId>
             <version>${vertx.version}</version>
         </dependency>
         <dependency>
