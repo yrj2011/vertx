@@ -9,6 +9,8 @@
     <modules>
         <module>vertx-book-demo</module>
         <module>vertx-blog-demo</module>
+        <module>vertx-framework</module>
+        <module>vertx-stu-manager</module>
     </modules>
 
     <properties>

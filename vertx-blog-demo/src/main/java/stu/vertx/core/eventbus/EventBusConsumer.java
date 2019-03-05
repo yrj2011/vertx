@@ -21,7 +21,7 @@ public class EventBusConsumer extends AbstractVerticle {
 	@Override
 	public void start() throws Exception {
 		EventBus eb = vertx.eventBus();
-		
+
 		// 消费消息
 		eb.consumer("hello", handle -> {
 			String msg = (String) handle.body();

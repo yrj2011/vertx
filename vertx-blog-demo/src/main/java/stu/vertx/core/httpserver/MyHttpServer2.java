@@ -1,6 +1,7 @@
 package stu.vertx.core.httpserver;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Context;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -25,6 +26,11 @@ public class MyHttpServer2 extends AbstractVerticle {
 
 		// 部署服务，会调用服务的start方法
 		vertx.deployVerticle(verticle);
+	}
+
+	@Override
+	public void init(Vertx vertx, Context context) {
+		super.init(vertx, context);
 	}
 
 	@Override
