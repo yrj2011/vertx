@@ -21,8 +21,6 @@ public class HtmlResponser implements ResponseHandler {
         }
 
         String path = "/page" + page;
-        context.put("data", result.getData());
-        context.put("name","小红");
         context.reroute(path);
     }
 }

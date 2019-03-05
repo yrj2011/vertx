@@ -20,11 +20,12 @@ import io.vertx.ext.web.RoutingContext;
 public class UserController {
 
     @RequestMapping("/index")
-    public void index(JDBCClient jdbcClient, Handler<AsyncResult<Result>> resultHandler) {
+    public void index(RoutingContext context, JDBCClient jdbcClient, Handler<AsyncResult<Result>> resultHandler) {
         String sql = "select * from t_student";
         jdbcClient.query(sql, qryRes->{
             if(qryRes.succeeded()) {
-                Result result = Result.HTML("/index.ftl", new JsonObject().put("name","小明"));
+                Result result = Result.HTML("/index.ftl");
+                context.put("name", "小明");
                 resultHandler.handle(Future.succeededFuture(result));
             } else {
                 resultHandler.handle(Future.failedFuture("数据库异常"));

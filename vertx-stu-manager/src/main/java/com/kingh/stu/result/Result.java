@@ -30,9 +30,8 @@ public class Result {
                 .setType(XML);
     }
 
-    public static Result HTML(String view, Object data) {
+    public static Result HTML(String view) {
         return new Result()
-                .setData(data)
                 .setView(view)
                 .setType(HTML);
     }

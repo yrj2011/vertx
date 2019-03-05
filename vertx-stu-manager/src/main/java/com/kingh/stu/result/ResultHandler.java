@@ -35,7 +35,7 @@ public class ResultHandler implements Handler<AsyncResult<Result>> {
             result = event.result();
         } else {
             // 错误响应
-            result = Result.HTML("/500.html", new JsonObject().put("msg","服务器错误"));
+            result = Result.HTML("/500.html");
         }
         String resType = result.getType().toUpperCase();
         ResponseHandler responseHandler = handlerMap.get(resType);

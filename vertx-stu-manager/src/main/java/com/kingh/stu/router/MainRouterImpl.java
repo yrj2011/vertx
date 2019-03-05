@@ -87,8 +87,9 @@ public class MainRouterImpl implements MainRouter {
                 instance = clazz.newInstance();
                 classPool.put(clazz, instance);
             } catch (Exception e) {
-                // handle exception
                 e.printStackTrace();
+                event.reroute(E500);
+                return;
             }
         }
         try {
