@@ -1,0 +1,14 @@
+{
+  "default":{
+    "url":"jdbc:h2:~/mydb",
+    "driver_class":"org.h2.Driver",
+    "user":"sa",
+    "password":""
+  },
+  "prod":{
+    "url":"jdbc:mysql://localhost:3306/cms",
+    "driver_class":"com.mysql.cj.jdbc.Driver",
+    "user":"root",
+    "password":"Master123"
+  }
+}
