@@ -1,20 +1,17 @@
-package com.kingh.stu.utils;
+package com.kingh.vertx.core.utils;
 
-import com.kingh.stu.anno.RequestMapping;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * 类扫描工具类
- *
- * @author 孔冠华
+ * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
+ * @version 1.0
+ * @date 2019/3/11 17:38
  */
 public class ClassScanner {
 
@@ -40,7 +37,6 @@ public class ClassScanner {
     public static void main(String[] args) throws Exception {
         ClassScanner sc = new ClassScanner();
         sc.scanner("");
-        System.out.println(sc.getAnnoClass(RequestMapping.class));
     }
 
     /**
@@ -50,13 +46,6 @@ public class ClassScanner {
      * @return
      */
     public List<Class> getAnnoClass(Class anno) {
-        // 这种写法还是不行
-//        return classList.stream()
-//                .map(c->c.getAnnotations())
-//                .flatMap(Arrays::stream)
-//                .filter(a->a.annotationType() == anno)
-//                .map(ann->ann.getClass())
-//                .collect(Collectors.toList());
         List<Class> selectClass = new ArrayList<>();
         for (Class clazz : classList) {
             Annotation[] annos = clazz.getAnnotations();

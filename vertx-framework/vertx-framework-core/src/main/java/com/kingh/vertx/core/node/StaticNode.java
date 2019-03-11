@@ -43,8 +43,19 @@ public class StaticNode {
      */
     private Map<String, Param> result;
 
+    /**
+     * 启动状态 00 启动 99 停止
+     */
+    private String status;
+
+    /**
+     * 下一个节点
+     */
     private StaticNode next;
 
+    /**
+     * 前一个节点
+     */
     private StaticNode previous;
 
     public static class Param {
@@ -191,6 +202,15 @@ public class StaticNode {
 
     public StaticNode setPrevious(StaticNode previous) {
         this.previous = previous;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public StaticNode setStatus(String status) {
+        this.status = status;
         return this;
     }
 }
