@@ -15,6 +15,8 @@
         <module>vertx-framework-core</module>
         <module>vertx-framework-mgr</module>
         <module>vertx-framework-listener</module>
+        <module>vertx-framework-common</module>
+        <module>vertx-framework-plugins</module>
     </modules>
 
 

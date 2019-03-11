@@ -9,14 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vertx-framework-core</artifactId>
+    <artifactId>vertx-framework-common</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.stu.vertx</groupId>
-            <artifactId>vertx-framework-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 
 </project>
