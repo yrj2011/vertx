@@ -59,6 +59,11 @@ public class RunnableNode {
      */
     private JsonObject result;
 
+    /**
+     * 静态节点
+     */
+    private StaticNode staticNode;
+
     public RunnableNode(Vertx vertx) {
         this.vertx = vertx;
         this.thread = Thread.currentThread();
@@ -145,6 +150,15 @@ public class RunnableNode {
 
     public RunnableNode setResult(JsonObject result) {
         this.result = result;
+        return this;
+    }
+
+    public StaticNode getStaticNode() {
+        return staticNode;
+    }
+
+    public RunnableNode setStaticNode(StaticNode staticNode) {
+        this.staticNode = staticNode;
         return this;
     }
 }

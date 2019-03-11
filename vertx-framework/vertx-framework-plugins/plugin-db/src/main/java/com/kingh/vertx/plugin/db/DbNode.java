@@ -16,10 +16,10 @@ import java.util.Map;
  */
 public class DbNode {
 
-    @Node
-    public StaticNode create() {
+    Map<String, StaticNode.Param> params = new HashMap<>();
+    Map<String, StaticNode.Param> result = new HashMap<>();
 
-        Map<String, StaticNode.Param> params = new HashMap<>();
+    public DbNode() {
         params.put("sql", new StaticNode.Param()
                 .setName("sql")
                 .setDescription("要执行的SQL")
@@ -32,7 +32,6 @@ public class DbNode {
                 .setMust(false)
                 .setTypeName(JsonArray.class.getName()));
 
-        Map<String, StaticNode.Param> result = new HashMap<>();
         result.put("rows", new StaticNode.Param()
                 .setName("rows")
                 .setDescription("返回多行的结果")
@@ -56,13 +55,22 @@ public class DbNode {
                 .setDescription("返回影响的结果的行数")
                 .setMust(true)
                 .setTypeName(Integer.class.getName()));
+    }
 
-        StaticNode node = new StaticNode("DB-NODE", DbService.address, "operate")
-                .setDescription("数据库服务节点")
+    @Node
+    public StaticNode createQueryNode() {
+        return new StaticNode("DB-QUERY-NODE", DbService.address, "query")
+                .setDescription("数据库服务查询节点")
                 .setParams(params)
                 .setResult(result);
+    }
 
-        return node;
+    @Node
+    public StaticNode createUpdateNode() {
+        return new StaticNode("DB-UPDATE-NODE", DbService.address, "update")
+                .setDescription("数据库服务更新节点")
+                .setParams(params)
+                .setResult(result);
     }
 
 }

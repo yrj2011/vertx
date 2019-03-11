@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>plugin-db</module>
+        <module>plugin-listener</module>
+        <module>plugin-mgr</module>
     </modules>
 
 

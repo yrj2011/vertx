@@ -10,7 +10,11 @@ import io.vertx.serviceproxy.ServiceBinder;
  * @version 1.0
  * @date 2019/3/11 11:02
  */
-@VerticleCompoment(address = DbService.address)
+@VerticleCompoment(
+        name = "db",
+        description = "数据库操作组件",
+        address = DbService.address,
+        autoDeploy = true)
 public class DbVerticle extends AbstractVerticle {
 
     @Override

@@ -24,6 +24,25 @@ public @interface VerticleCompoment {
      */
     String address();
 
+    /**
+     * Verticle名称，便于识别
+     * @return
+     */
+    String name() default "";
+
+    /**
+     * Verticle 描述
+     * @return
+     */
+    String description() default "";
+
+    /**
+     * 自动部署
+     *
+     * @return
+     */
+    boolean autoDeploy() default false;
+
     boolean worker() default DeploymentOptions.DEFAULT_WORKER;
 
     boolean multiThreaded() default DeploymentOptions.DEFAULT_MULTI_THREADED;
