@@ -18,13 +18,6 @@ import java.lang.annotation.*;
 public @interface VerticleCompoment {
 
     /**
-     * 发布到Event Bus中的服务地址
-     *
-     * @return
-     */
-    String address();
-
-    /**
      * Verticle名称，便于识别
      * @return
      */

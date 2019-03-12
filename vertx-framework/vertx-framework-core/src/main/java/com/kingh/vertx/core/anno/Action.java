@@ -14,6 +14,10 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Method {
+public @interface Action {
+
+    String name();
+
+    String description() default "";
 
 }

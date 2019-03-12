@@ -3,10 +3,11 @@ package com.kingh.vertx.core.node;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
- * 运行链路定义
+ * 运行时链路
  *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
@@ -20,9 +21,14 @@ public class RunnableChain {
     private String id;
 
     /**
+     * 与静态链路关联
+     */
+    private StaticChain staticChain;
+
+    /**
      * 与静态节点相关联
      */
-    private RunnableNode node;
+    private List<RunnableNode> nodes;
 
     /**
      * 当前Vert.x实例
@@ -49,4 +55,67 @@ public class RunnableChain {
      */
     private JsonObject result;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public StaticChain getStaticChain() {
+        return staticChain;
+    }
+
+    public void setStaticChain(StaticChain staticChain) {
+        this.staticChain = staticChain;
+    }
+
+    public List<RunnableNode> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<RunnableNode> nodes) {
+        this.nodes = nodes;
+    }
+
+    public Vertx getVertx() {
+        return vertx;
+    }
+
+    public void setVertx(Vertx vertx) {
+        this.vertx = vertx;
+    }
+
+    public Long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    public Long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
+
+    public Throwable getT() {
+        return t;
+    }
+
+    public void setT(Throwable t) {
+        this.t = t;
+    }
+
+    public JsonObject getResult() {
+        return result;
+    }
+
+    public void setResult(JsonObject result) {
+        this.result = result;
+    }
 }

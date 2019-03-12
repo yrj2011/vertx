@@ -1,7 +1,7 @@
 package com.kingh.vertx.core;
 
+import com.kingh.vertx.core.anno.Action;
 import com.kingh.vertx.core.anno.Chain;
-import com.kingh.vertx.core.anno.Node;
 import com.kingh.vertx.core.anno.VerticleCompoment;
 import com.kingh.vertx.core.node.Compoment;
 import com.kingh.vertx.core.node.StaticChain;
@@ -37,7 +37,7 @@ public class VertxApplication {
         // 扫描类，封装服务和链
         ClassScanner scanner = ClassScanner.getInstance();
         scanner.scanner("");
-        List<Class> nodes = scanner.getAnnoClass(Node.class);
+        List<Class> nodes = scanner.getAnnoClass(Action.class);
         List<Class> chains = scanner.getAnnoClass(Chain.class);
         List<Class> verticles = scanner.getAnnoClass(VerticleCompoment.class);
 

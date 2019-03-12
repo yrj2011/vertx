@@ -3,6 +3,8 @@ package com.kingh.vertx.core.node;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Verticle;
 
+import java.util.Set;
+
 /**
  * 组件
  *
@@ -16,6 +18,11 @@ public class Compoment {
      * 组件名称
      */
     private String name;
+
+    /**
+     * 组件描述
+     */
+    private String description;
 
     /**
      * 组件部署状态
@@ -33,19 +40,14 @@ public class Compoment {
     private DeploymentOptions deploymentOptions;
 
     /**
-     * 服务发布地址
-     */
-    private String address;
-
-    /**
-     * 组件描述
-     */
-    private String description;
-
-    /**
      * 是否自动部署
      */
     private boolean autoDeploy;
+
+    /**
+     * 服务列表
+     */
+    private Set<StaticService> services;
 
     public String getName() {
         return name;
@@ -79,14 +81,6 @@ public class Compoment {
         this.deploymentOptions = deploymentOptions;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -101,5 +95,13 @@ public class Compoment {
 
     public void setAutoDeploy(boolean autoDeploy) {
         this.autoDeploy = autoDeploy;
+    }
+
+    public Set<StaticService> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<StaticService> services) {
+        this.services = services;
     }
 }

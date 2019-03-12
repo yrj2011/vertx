@@ -8,6 +8,7 @@ import com.kingh.vertx.core.service.impl.CoreServiceImpl;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 
@@ -68,6 +69,14 @@ public interface CoreService {
      * @param chain 链名
      */
     void startChain(String chain, Handler<AsyncResult<Boolean>> resultHandler);
+
+    /**
+     * 执行链
+     *
+     * @param name
+     * @param resultHandler
+     */
+    void executeChain(String name, Handler<AsyncResult<JsonObject>> resultHandler);
 
     /**
      * 停止链

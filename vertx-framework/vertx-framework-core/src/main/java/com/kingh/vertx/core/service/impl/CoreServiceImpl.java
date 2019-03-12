@@ -5,6 +5,7 @@ import com.kingh.vertx.core.node.StaticChain;
 import com.kingh.vertx.core.node.StaticNode;
 import com.kingh.vertx.core.service.CoreService;
 import io.vertx.core.*;
+import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 
@@ -69,6 +70,13 @@ public class CoreServiceImpl implements CoreService {
     @Override
     public void startChain(String chain, Handler<AsyncResult<Boolean>> resultHandler) {
 
+    }
+
+    @Override
+    public void executeChain(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
+        staticChains.stream().filter(c->c.getName().equals(name)).forEach(chain->{
+
+        });
     }
 
     @Override

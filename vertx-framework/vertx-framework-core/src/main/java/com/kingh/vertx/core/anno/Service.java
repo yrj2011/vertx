@@ -14,4 +14,22 @@ import java.lang.annotation.*;
 @Documented
 public @interface Service {
 
+    /**
+     * 服务名字
+     *
+     * @return
+     */
+    String name();
+
+    /**
+     * 服务说明
+     * @return
+     */
+    String description() default "";
+
+    /**
+     * 服务发布的地址
+     * @return
+     */
+    String address();
 }

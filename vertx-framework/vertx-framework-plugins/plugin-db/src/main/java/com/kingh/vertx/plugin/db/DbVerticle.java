@@ -13,7 +13,6 @@ import io.vertx.serviceproxy.ServiceBinder;
 @VerticleCompoment(
         name = "db",
         description = "数据库操作组件",
-        address = DbService.address,
         autoDeploy = true)
 public class DbVerticle extends AbstractVerticle {
 
