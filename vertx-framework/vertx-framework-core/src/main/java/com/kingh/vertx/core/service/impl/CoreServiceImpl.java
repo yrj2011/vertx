@@ -10,6 +10,8 @@ import io.vertx.core.json.JsonObject;
 import java.util.List;
 
 /**
+ * 核心服务实现类
+ *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
  * @date 2019/3/11 17:40

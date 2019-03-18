@@ -11,6 +11,7 @@
         <module>vertx-blog-demo</module>
         <module>vertx-framework</module>
         <module>vertx-stu-manager</module>
+        <module>ext-thread-demo</module>
     </modules>
 
     <properties>
