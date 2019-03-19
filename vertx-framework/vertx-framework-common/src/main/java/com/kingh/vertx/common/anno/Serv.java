@@ -1,9 +1,10 @@
-package com.kingh.vertx.core.anno;
+package com.kingh.vertx.common.anno;
 
 import java.lang.annotation.*;
 
 /**
- * 在Verticle组件中，对外发布的服务接口中标注此注解，可以自动进行服务发现
+ * 在Verticle组件中，对外发布的服务接口中标注此注解，
+ * 可以自动进行服务发现
  *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
@@ -12,7 +13,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Service {
+public @interface Serv {
 
     /**
      * 服务名字
@@ -27,9 +28,4 @@ public @interface Service {
      */
     String description() default "";
 
-    /**
-     * 服务发布的地址
-     * @return
-     */
-    String address();
 }

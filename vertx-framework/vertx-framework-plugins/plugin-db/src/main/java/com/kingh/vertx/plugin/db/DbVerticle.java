@@ -1,6 +1,5 @@
 package com.kingh.vertx.plugin.db;
 
-import com.kingh.vertx.core.anno.VerticleCompoment;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.serviceproxy.ServiceBinder;
@@ -10,10 +9,6 @@ import io.vertx.serviceproxy.ServiceBinder;
  * @version 1.0
  * @date 2019/3/11 11:02
  */
-@VerticleCompoment(
-        name = "db",
-        description = "数据库操作组件",
-        autoDeploy = true)
 public class DbVerticle extends AbstractVerticle {
 
     @Override

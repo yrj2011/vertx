@@ -1,8 +1,8 @@
 package com.kingh.vertx.core.service.impl;
 
-import com.kingh.vertx.core.node.Compoment;
-import com.kingh.vertx.core.node.StaticChain;
-import com.kingh.vertx.core.node.StaticNode;
+import com.kingh.vertx.common.bean.ChainBean;
+import com.kingh.vertx.common.bean.ServiceBean;
+import com.kingh.vertx.common.bean.VerticleBean;
 import com.kingh.vertx.core.service.CoreService;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
@@ -21,13 +21,13 @@ public class CoreServiceImpl implements CoreService {
     private Vertx vertx;
 
     // 组件 （包含服务）
-    private List<Compoment> compoments;
+    private List<VerticleBean> compoments;
 
     // 服务 （最小执行单元）
-    private List<StaticNode> staticNodes;
+    private List<ServiceBean> services;
 
     // 功能 （多个组件构成一个功能）
-    private List<StaticChain> staticChains;
+    private List<ChainBean> chains;
 
     private Context context;
 
@@ -35,17 +35,17 @@ public class CoreServiceImpl implements CoreService {
         this.vertx = vertx;
         this.context = vertx.getOrCreateContext();
         this.compoments = context.get("compoments");
-        this.staticChains = context.get("staticChains");
-        this.staticNodes = context.get("staticNodes");
+        this.chains = context.get("staticChains");
+        this.services = context.get("staticNodes");
     }
 
     @Override
-    public List<Compoment> services() {
+    public List<VerticleBean> services() {
         return null;
     }
 
     @Override
-    public void deployService(String service, Handler<AsyncResult<Compoment>> resultHandler) {
+    public void deployService(String service, Handler<AsyncResult<VerticleBean>> resultHandler) {
         compoments.stream().filter(r -> r.getName().equals(service)).forEach(r -> {
             vertx.deployVerticle(r.getVerticle());
             resultHandler.handle(Future.succeededFuture(r));
@@ -53,7 +53,7 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public void stopService(String service, Handler<AsyncResult<Compoment>> resultHandler) {
+    public void stopService(String service, Handler<AsyncResult<VerticleBean>> resultHandler) {
         compoments.stream().filter(r -> r.getName().equals(service)).forEach(r -> {
             resultHandler.handle(Future.succeededFuture(r));
         });
@@ -65,7 +65,7 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public List<StaticChain> chains() {
+    public List<ChainBean> chains() {
         return null;
     }
 
@@ -76,7 +76,7 @@ public class CoreServiceImpl implements CoreService {
 
     @Override
     public void executeChain(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
-        staticChains.stream().filter(c->c.getName().equals(name)).forEach(chain->{
+        chains.stream().filter(c->c.getName().equals(name)).forEach(chain->{
 
         });
     }

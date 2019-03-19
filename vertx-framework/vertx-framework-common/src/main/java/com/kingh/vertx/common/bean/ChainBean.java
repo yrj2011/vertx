@@ -1,26 +1,45 @@
-package com.kingh.vertx.core.node;
+package com.kingh.vertx.common.bean;
 
+import java.util.LinkedList;
 
 /**
- * 链路
+ * 链
  *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
- * @date 2019/3/11 14:52
+ * @date 2019/3/19 9:00
  */
-public class StaticChain {
+public class ChainBean {
 
+    /**
+     * 链名
+     */
     private String name;
 
+    /**
+     * 链描述
+     */
     private String description;
 
+    /**
+     * 处理路径
+     */
     private String path; // request path
 
+    /**
+     * 支持方法
+     */
     private String method; // get or post ...
 
-    private StaticNode headNode;
+    /**
+     * 服务
+     */
+    private LinkedList<ServiceBean> services;
 
-    private String status;
+    /**
+     * 是否启用链
+     */
+    private boolean avaiable;
 
     public String getName() {
         return name;
@@ -54,19 +73,19 @@ public class StaticChain {
         this.method = method;
     }
 
-    public StaticNode getHeadNode() {
-        return headNode;
+    public LinkedList<ServiceBean> getServices() {
+        return services;
     }
 
-    public void setHeadNode(StaticNode headNode) {
-        this.headNode = headNode;
+    public void setServices(LinkedList<ServiceBean> services) {
+        this.services = services;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isAvaiable() {
+        return avaiable;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAvaiable(boolean avaiable) {
+        this.avaiable = avaiable;
     }
 }

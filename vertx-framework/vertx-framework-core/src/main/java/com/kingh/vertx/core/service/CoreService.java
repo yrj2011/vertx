@@ -1,10 +1,8 @@
 package com.kingh.vertx.core.service;
 
-import com.kingh.vertx.core.node.Compoment;
-import com.kingh.vertx.core.node.StaticChain;
-import com.kingh.vertx.core.node.StaticNode;
+import com.kingh.vertx.common.bean.ChainBean;
+import com.kingh.vertx.common.bean.VerticleBean;
 import com.kingh.vertx.core.service.factory.CoreServiceFactory;
-import com.kingh.vertx.core.service.impl.CoreServiceImpl;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
@@ -32,21 +30,21 @@ public interface CoreService {
      *
      * @return
      */
-    List<Compoment> services();
+    List<VerticleBean> services();
 
     /**
      * 部署服务
      *
      * @param service 服务名
      */
-    void deployService(String service, Handler<AsyncResult<Compoment>> resultHandler);
+    void deployService(String service, Handler<AsyncResult<VerticleBean>> resultHandler);
 
     /**
      * 停止服务
      *
      * @param service 服务名
      */
-    void stopService(String service, Handler<AsyncResult<Compoment>> resultHandler);
+    void stopService(String service, Handler<AsyncResult<VerticleBean>> resultHandler);
 
     /**
      * 服务状态查询
@@ -61,7 +59,7 @@ public interface CoreService {
      *
      * @return
      */
-    List<StaticChain> chains();
+    List<ChainBean> chains();
 
     /**
      * 部署链

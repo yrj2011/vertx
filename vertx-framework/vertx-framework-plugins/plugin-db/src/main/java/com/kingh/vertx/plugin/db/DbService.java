@@ -1,14 +1,13 @@
 package com.kingh.vertx.plugin.db;
 
-import com.kingh.vertx.core.anno.Action;
-import com.kingh.vertx.core.anno.Service;
-import com.kingh.vertx.core.node.RunnableNode;
+import com.kingh.vertx.common.bean.runnable.RService;
 import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 
 /**
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
@@ -17,7 +16,6 @@ import io.vertx.core.json.JsonArray;
  */
 @ProxyGen
 @VertxGen
-@Service(name = "数据库服务", address = DbService.address)
 public interface DbService {
 
     String address = "com.kingh.vertx.plugin.db";
@@ -26,9 +24,7 @@ public interface DbService {
         return new DbServiceImpl(vertx);
     }
 
-    @Action(name = "执行查询操作")
-    void query(String sql, JsonArray params, Handler<AsyncResult<RunnableNode>> resultHandler);
+    void query(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 
-    @Action(name = "执行更新操作")
-    void update(String sql, JsonArray params, Handler<AsyncResult<RunnableNode>> resultHandler);
+    void update(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 }

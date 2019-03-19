@@ -1,7 +1,6 @@
 package com.kingh.vertx.plugin.db;
 
-import com.kingh.vertx.core.node.StaticNode;
-import com.kingh.vertx.core.node.RunnableNode;
+import com.kingh.vertx.common.bean.runnable.RService;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -29,59 +28,59 @@ public class DbServiceImpl implements DbService {
     }
 
     @Override
-    public void query(String sql, JsonArray params, Handler<AsyncResult<RunnableNode>> resultHandler) {
-        RunnableNode node = new RunnableNode(vertx);
-
-        if (StringUtils.isBlank(sql)) {
-            node.setStatus("99");
-            resultHandler.handle(Future.succeededFuture(node));
-            return;
-        }
-
-        Handler<AsyncResult<ResultSet>> handler = rs -> {
-            if (rs.succeeded()) {
-                node.setStatus("00")
-                        .setResult(new JsonObject().put("result", rs.result().getRows()));
-                resultHandler.handle(Future.succeededFuture(node));
-            } else {
-                node.setStatus("99").setT(rs.cause());
-                resultHandler.handle(Future.succeededFuture(node));
-            }
-        };
-
-        if (params == null || params.size() == 0) {
-            jdbcClient.query(sql, handler);
-        } else {
-            jdbcClient.queryWithParams(sql, params, handler);
-        }
+    public void query(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler) {
+//        RunnableNode node = new RunnableNode(vertx);
+//
+//        if (StringUtils.isBlank(sql)) {
+//            node.setStatus("99");
+//            resultHandler.handle(Future.succeededFuture(node));
+//            return;
+//        }
+//
+//        Handler<AsyncResult<ResultSet>> handler = rs -> {
+//            if (rs.succeeded()) {
+//                node.setStatus("00")
+//                        .setResult(new JsonObject().put("result", rs.result().getRows()));
+//                resultHandler.handle(Future.succeededFuture(node));
+//            } else {
+//                node.setStatus("99").setT(rs.cause());
+//                resultHandler.handle(Future.succeededFuture(node));
+//            }
+//        };
+//
+//        if (params == null || params.size() == 0) {
+//            jdbcClient.query(sql, handler);
+//        } else {
+//            jdbcClient.queryWithParams(sql, params, handler);
+//        }
     }
 
 
     @Override
-    public void update(String sql, JsonArray params, Handler<AsyncResult<RunnableNode>> resultHandler) {
-        RunnableNode node = new RunnableNode(vertx);
-
-        if (StringUtils.isBlank(sql)) {
-            node.setStatus("99");
-            resultHandler.handle(Future.succeededFuture(node));
-            return;
-        }
-
-        Handler<AsyncResult<UpdateResult>> handler = rs -> {
-            if (rs.succeeded()) {
-                node.setStatus("00")
-                        .setResult(new JsonObject().put("result", rs.result().getUpdated()));
-                resultHandler.handle(Future.succeededFuture(node));
-            } else {
-                node.setStatus("99").setT(rs.cause());
-                resultHandler.handle(Future.succeededFuture(node));
-            }
-        };
-
-        if (params == null || params.size() == 0) {
-            jdbcClient.update(sql, handler);
-        } else {
-            jdbcClient.updateWithParams(sql, params, handler);
-        }
+    public void update(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler) {
+//        RunnableNode node = new RunnableNode(vertx);
+//
+//        if (StringUtils.isBlank(sql)) {
+//            node.setStatus("99");
+//            resultHandler.handle(Future.succeededFuture(node));
+//            return;
+//        }
+//
+//        Handler<AsyncResult<UpdateResult>> handler = rs -> {
+//            if (rs.succeeded()) {
+//                node.setStatus("00")
+//                        .setResult(new JsonObject().put("result", rs.result().getUpdated()));
+//                resultHandler.handle(Future.succeededFuture(node));
+//            } else {
+//                node.setStatus("99").setT(rs.cause());
+//                resultHandler.handle(Future.succeededFuture(node));
+//            }
+//        };
+//
+//        if (params == null || params.size() == 0) {
+//            jdbcClient.update(sql, handler);
+//        } else {
+//            jdbcClient.updateWithParams(sql, params, handler);
+//        }
     }
 }

@@ -1,4 +1,4 @@
-package com.kingh.vertx.core.node;
+package com.kingh.vertx.common.bean;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Verticle;
@@ -6,16 +6,14 @@ import io.vertx.core.Verticle;
 import java.util.Set;
 
 /**
- * 组件
- *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
- * @date 2019/3/11 19:32
+ * @date 2019/3/19 9:00
  */
-public class Compoment {
+public class VerticleBean {
 
     /**
-     * 组件名称
+     * 组件标识
      */
     private String name;
 
@@ -47,7 +45,12 @@ public class Compoment {
     /**
      * 服务列表
      */
-    private Set<StaticService> services;
+    private Set<ServiceBean> services;
+
+    /**
+     * 部署地址
+     */
+    private String address;
 
     public String getName() {
         return name;
@@ -55,6 +58,14 @@ public class Compoment {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStatus() {
@@ -81,14 +92,6 @@ public class Compoment {
         this.deploymentOptions = deploymentOptions;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public boolean isAutoDeploy() {
         return autoDeploy;
     }
@@ -97,11 +100,19 @@ public class Compoment {
         this.autoDeploy = autoDeploy;
     }
 
-    public Set<StaticService> getServices() {
+    public Set<ServiceBean> getServices() {
         return services;
     }
 
-    public void setServices(Set<StaticService> services) {
+    public void setServices(Set<ServiceBean> services) {
         this.services = services;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
