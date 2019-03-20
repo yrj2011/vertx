@@ -1,8 +1,7 @@
 package com.kingh.vertx.core.context;
 
-import com.kingh.vertx.common.anno.Param;
-import com.kingh.vertx.common.anno.Service;
-import com.kingh.vertx.common.anno.Verticle;
+import com.kingh.vertx.common.anno.*;
+import com.kingh.vertx.common.bean.ChainBean;
 import com.kingh.vertx.common.bean.ServiceBean;
 import com.kingh.vertx.common.bean.VerticleBean;
 import com.kingh.vertx.common.constant.Status;
@@ -10,6 +9,8 @@ import com.kingh.vertx.common.scan.Scanner;
 import com.kingh.vertx.core.service.CoreService;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
  * @date 2019/3/19 9:58
  */
 public class AnnotationApplicationContext implements ApplicationContext {
+
+    private Logger logger = LoggerFactory.getLogger(AnnotationApplicationContext.class);
 
     // 所有扫描出的类
     private Set<Class<?>> classes;
@@ -34,10 +37,13 @@ public class AnnotationApplicationContext implements ApplicationContext {
     // Vertx实例
     private Vertx vertx;
 
+    // 系统支持的所有链
+    private List<ChainBean> chains = new ArrayList<>();
 
     public AnnotationApplicationContext() {
-        this.vertx = Vertx.vertx();
+        this.vertx = this.vertx == null ? Vertx.vertx() : this.vertx;
         this.coreService = CoreService.create(vertx);
+        ApplicationContextHolder.setApplicationContext(this);
     }
 
     @Override
@@ -50,8 +56,14 @@ public class AnnotationApplicationContext implements ApplicationContext {
                 .filter(c -> c.isAnnotationPresent(Verticle.class))
                 .collect(Collectors.toList());
 
+        // 构建基础服务
+        buildService(verticles);
+
         // 构建链
-        buildChain(verticles);
+        List<Class> chainConfigurations = classes.stream()
+                .filter(c -> c.isAnnotationPresent(ChainConfiguration.class))
+                .collect(Collectors.toList());
+        buildChain(chainConfigurations);
 
         // 部署自动服务
         this.verticles
@@ -65,11 +77,11 @@ public class AnnotationApplicationContext implements ApplicationContext {
     }
 
     /**
-     * 构建链
+     * 构建服务
      *
      * @param verticles
      */
-    private void buildChain(List<Class> verticles) {
+    private void buildService(List<Class> verticles) {
         if (verticles == null || verticles.size() == 0) {
             return;
         }
@@ -127,6 +139,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
                                             params.put(pa.getName(), pa);
                                         });
                                 serviceBean.setParams(params);
+                                serviceBean.setVerticle(verticleBean);
                                 return serviceBean;
                             })
                             .collect(Collectors.toSet());
@@ -134,4 +147,81 @@ public class AnnotationApplicationContext implements ApplicationContext {
                     this.verticles.put(vert.name(), verticleBean);
                 });
     }
+
+    /**
+     * 构建链
+     *
+     * @param chainConfigurations
+     */
+    private void buildChain(List<Class> chainConfigurations) {
+        if (chainConfigurations == null || chainConfigurations.size() == 0) {
+            return;
+        }
+
+        // 读取带有@Chain注解的方法，并执行这个方法，拿到链
+        chainConfigurations.stream().forEach(c -> {
+            // 取所有的方法
+            Method[] methods = c.getMethods();
+            // 实例化对象
+            Object obj;
+            try {
+                obj = c.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(c.getName() + " 实例化链配置对象失败");
+            }
+            Object instance = obj;
+            // 遍历标有@Chain的方法
+            Arrays.stream(methods)
+                    .filter(r -> r.isAnnotationPresent(Chain.class))
+                    .forEach(r -> {
+                        try {
+                            Object res = r.invoke(instance);
+                            if (res == null || !(res instanceof ChainBean)) {
+                                // 不处理
+                                logger.warn(r.getName() + " 方法返回值为空，或者不为ChainBean对象");
+                            } else {
+                                ChainBean chain = (ChainBean) res;
+                                chains.add(chain);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            throw new RuntimeException(r.getName() + " 解析链方法失败");
+                        }
+                    });
+        });
+    }
+
+    @Override
+    public ServiceBean service(String tag) {
+        if (tag == null) {
+            return null;
+        }
+        String[] prefix = tag.split(":");
+        if (prefix == null || prefix.length != 2) {
+            throw new RuntimeException("标识符无效");
+        }
+
+        return verticles.get(prefix[0])
+                .getServices()
+                .stream()
+                .filter(r -> r.getName().equals(prefix[1]))
+                .findFirst()
+                .get();
+    }
+
+    @Override
+    public void setVertx(Vertx vertx) {
+        this.vertx = vertx;
+    }
+
+    @Override
+    public Vertx vertx() {
+        return this.vertx;
+    }
+
+    @Override
+    public List<ChainBean> chains() {
+        return chains;
+    }
+
 }

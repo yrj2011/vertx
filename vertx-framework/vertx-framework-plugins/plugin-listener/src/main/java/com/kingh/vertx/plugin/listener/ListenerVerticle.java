@@ -1,9 +1,18 @@
 package com.kingh.vertx.plugin.listener;
 
 import com.kingh.vertx.common.anno.Verticle;
+import com.kingh.vertx.common.bean.ChainBean;
+import com.kingh.vertx.core.context.ApplicationContext;
+import com.kingh.vertx.core.context.ApplicationContextHolder;
+import com.kingh.vertx.core.exector.ChainExector;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
@@ -13,15 +22,41 @@ import io.vertx.core.http.HttpServer;
 @Verticle(name = "ListenerVerticle", description = "监听客户端请求", autoDeploy = true)
 public class ListenerVerticle extends AbstractVerticle {
 
+    private ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
+
     @Override
     public void start() throws Exception {
 
-        HttpServer server = vertx.createHttpServer();
+        Integer port = config().getInteger("port");
+        if (port == null) {
+            port = 8080;
+        }
 
-        server.requestHandler(req -> {
-            req.response().end("Hello");
+        // 创建Http服务
+        HttpServer server = vertx.createHttpServer();
+        Router router = Router.router(vertx);
+
+        // 交给链处理
+        List<ChainBean> chains = applicationContext.chains();
+        chains.stream().filter(ChainBean::isAvaiable).forEach(c -> {
+            router.route(c.getPath()).method(c.getMethod()).handler(con -> {
+                // 调用链,处理结果
+                ChainExector.execute(c, con, vertx, re -> {
+                    if (re.succeeded()) {
+                        JsonObject result = re.result();
+                        con.request().response().putHeader("Content-type","application/json;charset=utf-8");
+                        con.request().response().end(result.toString());
+                    } else {
+                        con.request().response().end("ERROR");
+                    }
+                });
+            });
         });
 
-        server.listen(8080);
+        // 处理请求
+        server.requestHandler(router);
+
+        // 监听端口
+        server.listen(port);
     }
 }

@@ -12,6 +12,8 @@ import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.UpdateResult;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.UUID;
+
 /**
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
@@ -29,6 +31,8 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public void query(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler) {
+
+        resultHandler.handle(Future.succeededFuture(new JsonObject().put("id", UUID.randomUUID().toString())));
 //        RunnableNode node = new RunnableNode(vertx);
 //
 //        if (StringUtils.isBlank(sql)) {
@@ -82,5 +86,15 @@ public class DbServiceImpl implements DbService {
 //        } else {
 //            jdbcClient.updateWithParams(sql, params, handler);
 //        }
+    }
+
+    @Override
+    public void hello(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
+        resultHandler.handle(Future.succeededFuture(new JsonObject().put("name", "Hello " + name)));
+    }
+
+    @Override
+    public void world(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
+        resultHandler.handle(Future.succeededFuture(new JsonObject().put("msg", " World " + name)));
     }
 }

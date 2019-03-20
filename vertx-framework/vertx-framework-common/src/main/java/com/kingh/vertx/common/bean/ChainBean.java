@@ -1,5 +1,7 @@
 package com.kingh.vertx.common.bean;
 
+import io.vertx.core.http.HttpMethod;
+
 import java.util.LinkedList;
 
 /**
@@ -29,7 +31,7 @@ public class ChainBean {
     /**
      * 支持方法
      */
-    private String method; // get or post ...
+    private HttpMethod method; // get or post ...
 
     /**
      * 服务
@@ -65,11 +67,11 @@ public class ChainBean {
         this.path = path;
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(HttpMethod method) {
         this.method = method;
     }
 

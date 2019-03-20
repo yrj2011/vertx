@@ -41,6 +41,11 @@ public class ServiceBean {
      */
     private Map<String, Param> result;
 
+    /**
+     * 引用Verticle
+     */
+    private VerticleBean verticle;
+
     public static class Param {
         /**
          * 参数名
@@ -155,5 +160,13 @@ public class ServiceBean {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public VerticleBean getVerticle() {
+        return verticle;
+    }
+
+    public void setVerticle(VerticleBean verticle) {
+        this.verticle = verticle;
     }
 }
