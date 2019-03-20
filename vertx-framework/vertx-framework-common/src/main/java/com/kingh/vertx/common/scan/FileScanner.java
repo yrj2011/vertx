@@ -70,7 +70,6 @@ public class FileScanner implements Scanner {
     public Set<Class<?>> scan(String packageName, Predicate<Class<?>> predicate) {
         //先把包名转换为路径,首先得到项目的classpath
         String classpath = defaultClassPath;
-        System.out.println(classpath);
         //然后把我们的包名basPack转换为路径名
         String basePackPath = packageName.replace(".", File.separator);
         String searchPath = classpath + basePackPath;

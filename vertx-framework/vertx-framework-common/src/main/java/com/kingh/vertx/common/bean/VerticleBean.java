@@ -1,11 +1,14 @@
 package com.kingh.vertx.common.bean;
 
+import com.kingh.vertx.common.constant.Status;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Verticle;
 
 import java.util.Set;
 
 /**
+ * 组件
+ *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
  * @date 2019/3/19 9:00
@@ -25,7 +28,7 @@ public class VerticleBean {
     /**
      * 组件部署状态
      */
-    private String status;
+    private Status status;
 
     /**
      * 组件实例
@@ -68,11 +71,11 @@ public class VerticleBean {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

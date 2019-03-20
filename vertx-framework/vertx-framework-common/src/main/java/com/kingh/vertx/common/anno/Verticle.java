@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Vert {
+public @interface Verticle {
 
     /**
      * Verticle名称，便于识别
@@ -30,7 +30,14 @@ public @interface Vert {
      *
      * @return
      */
-    String address();
+    String address() default "";
+
+    /**
+     * 服务类
+     *
+     * @return
+     */
+    Class service() default Object.class;
 
     /**
      * Verticle 描述

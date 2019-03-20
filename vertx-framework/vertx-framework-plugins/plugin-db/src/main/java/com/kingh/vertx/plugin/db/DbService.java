@@ -1,6 +1,7 @@
 package com.kingh.vertx.plugin.db;
 
-import com.kingh.vertx.common.bean.runnable.RService;
+import com.kingh.vertx.common.anno.Param;
+import com.kingh.vertx.common.anno.Service;
 import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
@@ -24,7 +25,9 @@ public interface DbService {
         return new DbServiceImpl(vertx);
     }
 
-    void query(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
+    @Service(name = "query", description = "查询数据库操作")
+    void query(@Param(name = "sql", must = true, description = "要执行的SQL") String sql, @Param(name = "params", description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 
-    void update(String sql, JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
+    @Service(name = "update", description = "更新数据库操作")
+    void update(@Param(name = "sql",must = true, description = "要执行的SQL") String sql, @Param(name = "params",description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 }

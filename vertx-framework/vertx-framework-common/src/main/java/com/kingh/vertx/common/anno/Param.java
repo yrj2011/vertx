@@ -1,5 +1,7 @@
 package com.kingh.vertx.common.anno;
 
+import java.lang.annotation.*;
+
 /**
  * 服务参数标注
  *
@@ -7,7 +9,17 @@ package com.kingh.vertx.common.anno;
  * @version 1.0
  * @date 2019/3/19 9:21
  */
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface Param {
+
+    /**
+     * 参数名
+     *
+     * @return
+     */
+    String name();
 
     /**
      * 参数描述

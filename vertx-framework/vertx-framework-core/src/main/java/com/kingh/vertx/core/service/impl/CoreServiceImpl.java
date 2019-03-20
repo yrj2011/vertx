@@ -3,9 +3,12 @@ package com.kingh.vertx.core.service.impl;
 import com.kingh.vertx.common.bean.ChainBean;
 import com.kingh.vertx.common.bean.ServiceBean;
 import com.kingh.vertx.common.bean.VerticleBean;
+import com.kingh.vertx.common.constant.Status;
 import com.kingh.vertx.core.service.CoreService;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,25 +21,15 @@ import java.util.List;
  */
 public class CoreServiceImpl implements CoreService {
 
+    private Logger logger = LoggerFactory.getLogger(CoreService.class);
+
     private Vertx vertx;
-
-    // 组件 （包含服务）
-    private List<VerticleBean> compoments;
-
-    // 服务 （最小执行单元）
-    private List<ServiceBean> services;
-
-    // 功能 （多个组件构成一个功能）
-    private List<ChainBean> chains;
 
     private Context context;
 
     public CoreServiceImpl(Vertx vertx) {
         this.vertx = vertx;
         this.context = vertx.getOrCreateContext();
-        this.compoments = context.get("compoments");
-        this.chains = context.get("staticChains");
-        this.services = context.get("staticNodes");
     }
 
     @Override
@@ -45,18 +38,34 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public void deployService(String service, Handler<AsyncResult<VerticleBean>> resultHandler) {
-        compoments.stream().filter(r -> r.getName().equals(service)).forEach(r -> {
-            vertx.deployVerticle(r.getVerticle());
-            resultHandler.handle(Future.succeededFuture(r));
+    public void deployVerticle(VerticleBean verticle, Handler<AsyncResult<JsonObject>> resultHandler) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("开始部署Verticle，Verticle的名称为：" + verticle.getName());
+        }
+
+        Verticle vert = verticle.getVerticle();
+        if (vert == null) {
+            logger.error("要部署的Verticle实例为空，不执行部署操作！");
+            resultHandler.handle(Future.failedFuture("Verticle 实例为空"));
+            return;
+        }
+
+        // 部署Verticle到Vert.x实例中
+        vertx.deployVerticle(verticle.getVerticle(), res -> {
+            if (res.succeeded()) {
+                logger.info(verticle.getName() + " 部署成功！");
+                verticle.setStatus(Status.available);
+                resultHandler.handle(Future.succeededFuture(new JsonObject()));
+            } else {
+                logger.error(verticle.getName() + " 部署失败！", res.cause());
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
         });
+
     }
 
     @Override
-    public void stopService(String service, Handler<AsyncResult<VerticleBean>> resultHandler) {
-        compoments.stream().filter(r -> r.getName().equals(service)).forEach(r -> {
-            resultHandler.handle(Future.succeededFuture(r));
-        });
+    public void stopService(String service, Handler<AsyncResult<JsonObject>> resultHandler) {
     }
 
     @Override
@@ -70,19 +79,16 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public void startChain(String chain, Handler<AsyncResult<Boolean>> resultHandler) {
+    public void startChain(String chain, Handler<AsyncResult<JsonObject>> resultHandler) {
 
     }
 
     @Override
     public void executeChain(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
-        chains.stream().filter(c->c.getName().equals(name)).forEach(chain->{
-
-        });
     }
 
     @Override
-    public void stopChain(String chain, Handler<AsyncResult<Boolean>> resultHandler) {
+    public void stopChain(String chain, Handler<AsyncResult<JsonObject>> resultHandler) {
 
     }
 

@@ -3,11 +3,18 @@ package com.kingh.vertx.common.bean;
 import java.util.Map;
 
 /**
+ * 服务
+ *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
  * @date 2019/3/19 9:00
  */
 public class ServiceBean {
+
+    /**
+     * 服务的方法名
+     */
+    private String id;
 
     /**
      * 服务名称
@@ -100,5 +107,53 @@ public class ServiceBean {
             this.typeName = typeName;
             return this;
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public Map<String, Param> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, Param> params) {
+        this.params = params;
+    }
+
+    public Map<String, Param> getResult() {
+        return result;
+    }
+
+    public void setResult(Map<String, Param> result) {
+        this.result = result;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

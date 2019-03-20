@@ -35,16 +35,16 @@ public interface CoreService {
     /**
      * 部署服务
      *
-     * @param service 服务名
+     * @param verticle 服务名
      */
-    void deployService(String service, Handler<AsyncResult<VerticleBean>> resultHandler);
+    void deployVerticle(VerticleBean verticle, Handler<AsyncResult<JsonObject>> resultHandler);
 
     /**
      * 停止服务
      *
      * @param service 服务名
      */
-    void stopService(String service, Handler<AsyncResult<VerticleBean>> resultHandler);
+    void stopService(String service, Handler<AsyncResult<JsonObject>> resultHandler);
 
     /**
      * 服务状态查询
@@ -66,7 +66,7 @@ public interface CoreService {
      *
      * @param chain 链名
      */
-    void startChain(String chain, Handler<AsyncResult<Boolean>> resultHandler);
+    void startChain(String chain, Handler<AsyncResult<JsonObject>> resultHandler);
 
     /**
      * 执行链
@@ -81,7 +81,7 @@ public interface CoreService {
      *
      * @param chain 链名
      */
-    void stopChain(String chain, Handler<AsyncResult<Boolean>> resultHandler);
+    void stopChain(String chain, Handler<AsyncResult<JsonObject>> resultHandler);
 
     /**
      * 链状态查询

@@ -15,6 +15,7 @@
         <module>vertx-framework-core</module>
         <module>vertx-framework-common</module>
         <module>vertx-framework-plugins</module>
+        <module>vertx-framework-example</module>
     </modules>
 
 

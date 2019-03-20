@@ -10,10 +10,10 @@ import java.lang.annotation.*;
  * @version 1.0
  * @date 2019/3/11 9:46
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Serv {
+public @interface Service {
 
     /**
      * 服务名字

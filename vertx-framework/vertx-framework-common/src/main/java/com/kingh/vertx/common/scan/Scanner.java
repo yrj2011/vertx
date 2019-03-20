@@ -17,7 +17,7 @@ public interface Scanner {
      * @param predicate   筛选条件
      * @return
      */
-    Set<Class<?>> scan(String packageName, Predicate<Class<?>> predicate);
+    Set<Class<?>>scan(String packageName, Predicate<Class<?>> predicate);
 
 
     /**

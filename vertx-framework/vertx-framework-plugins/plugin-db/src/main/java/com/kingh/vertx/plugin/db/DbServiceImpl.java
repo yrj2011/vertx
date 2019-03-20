@@ -24,7 +24,7 @@ public class DbServiceImpl implements DbService {
 
     public DbServiceImpl(Vertx vertx) {
         this.vertx = vertx;
-        this.jdbcClient = JDBCClient.createShared(vertx, new JsonObject());
+//        this.jdbcClient = JDBCClient.createShared(vertx, new JsonObject());
     }
 
     @Override
