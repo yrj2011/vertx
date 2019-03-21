@@ -39,7 +39,7 @@ public interface ApplicationContext {
     /**
      * 获取服务
      *
-     * @param tag
+     * @param tag 服务标识 verticle:service
      * @return
      */
     ServiceBean service(String tag);
