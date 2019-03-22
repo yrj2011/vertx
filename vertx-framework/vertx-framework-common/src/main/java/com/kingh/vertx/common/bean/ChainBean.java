@@ -43,6 +43,11 @@ public class ChainBean {
      */
     private boolean avaiable;
 
+    /**
+     * 排序位置
+     */
+    private Integer pos = 100;
+
     public String getName() {
         return name;
     }
@@ -94,6 +99,15 @@ public class ChainBean {
 
     public ChainBean setAvaiable(boolean avaiable) {
         this.avaiable = avaiable;
+        return this;
+    }
+
+    public Integer getPos() {
+        return pos;
+    }
+
+    public ChainBean setPos(Integer pos) {
+        this.pos = pos;
         return this;
     }
 }
