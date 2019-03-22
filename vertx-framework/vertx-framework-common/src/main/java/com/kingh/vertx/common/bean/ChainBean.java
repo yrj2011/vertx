@@ -47,47 +47,53 @@ public class ChainBean {
         return name;
     }
 
-    public void setName(String name) {
+    public ChainBean setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ChainBean setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public ChainBean setPath(String path) {
         this.path = path;
+        return this;
     }
 
     public HttpMethod getMethod() {
         return method;
     }
 
-    public void setMethod(HttpMethod method) {
+    public ChainBean setMethod(HttpMethod method) {
         this.method = method;
+        return this;
     }
 
     public LinkedList<ServiceBean> getServices() {
         return services;
     }
 
-    public void setServices(LinkedList<ServiceBean> services) {
+    public ChainBean setServices(LinkedList<ServiceBean> services) {
         this.services = services;
+        return this;
     }
 
     public boolean isAvaiable() {
         return avaiable;
     }
 
-    public void setAvaiable(boolean avaiable) {
+    public ChainBean setAvaiable(boolean avaiable) {
         this.avaiable = avaiable;
+        return this;
     }
 }
