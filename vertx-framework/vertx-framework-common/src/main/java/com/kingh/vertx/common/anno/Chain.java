@@ -44,14 +44,14 @@ public @interface Chain {
      *
      * @return
      */
-    boolean avaiable() default false;
+    boolean avaiable() default true;
 
     /**
      * 是否是普通链，特殊链不调用服务
      *
      * @return
      */
-    boolean general() default false;
+    boolean general() default true;
 
     /**
      * 支持的HTTP请求方法，默认为都支持
