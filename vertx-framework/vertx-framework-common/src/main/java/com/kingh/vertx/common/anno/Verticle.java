@@ -23,10 +23,10 @@ public @interface Verticle {
      *
      * @return
      */
-    String name() default "";
+    String name();
 
     /**
-     * 服务发布地址
+     * 服务发布地址，有些特殊的Verticle没有address，比如监听
      *
      * @return
      */
