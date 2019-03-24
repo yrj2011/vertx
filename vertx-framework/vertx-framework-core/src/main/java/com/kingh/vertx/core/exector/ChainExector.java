@@ -147,27 +147,30 @@ public class ChainExector {
         JsonObject data = new JsonObject();
         HttpServerRequest request = context.request();
 
+        MultiMap queryParams = context.queryParams();
+        if (queryParams != null && queryParams.size() > 0) {
+            queryParams.entries().stream().forEach(en -> data.put(en.getKey(), en.getValue()));
+        }
+
         // 处理form表单中提交上来的数据
         MultiMap formAttributes = request.formAttributes();
         if (formAttributes != null && formAttributes.size() > 0) {
             formAttributes.entries().stream().forEach(en -> data.put(en.getKey(), en.getValue()));
         }
-        logger.debug("获取到的参数为：" + data);
 
         // 处理post请求，请求体中的数据
-        request.bodyHandler(body -> {
-            String text = body.toString();
-            System.out.println(text);
+        String text = context.getBodyAsString();
 
-            if (StringUtils.isNotBlank(text)) {
-                try {
-                    data.mergeIn(new JsonObject(text));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        if (text != null && "".equals(text)) {
+            try {
+                data.mergeIn(new JsonObject(text));
+            } catch (Exception e) {
+                logger.warn("不是规范的JSON格式 " + text);
             }
-            resultHandler.handle(Future.succeededFuture(data));
-        });
+        }
+
+        logger.debug("获取到的参数为：" + data);
+        resultHandler.handle(Future.succeededFuture(data));
 
     }
 }

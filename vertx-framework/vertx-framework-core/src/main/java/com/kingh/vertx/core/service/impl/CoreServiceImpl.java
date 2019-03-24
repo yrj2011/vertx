@@ -39,10 +39,6 @@ public class CoreServiceImpl implements CoreService {
 
     @Override
     public void deployVerticle(VerticleBean verticle, Handler<AsyncResult<JsonObject>> resultHandler) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("开始部署Verticle，Verticle的名称为：" + verticle.getName());
-        }
-
         Verticle vert = verticle.getVerticle();
         if (vert == null) {
             logger.error("要部署的Verticle实例为空，不执行部署操作！");

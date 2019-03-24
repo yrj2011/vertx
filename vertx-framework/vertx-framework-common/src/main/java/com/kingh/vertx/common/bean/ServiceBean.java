@@ -118,55 +118,75 @@ public class ServiceBean {
         return name;
     }
 
-    public void setName(String name) {
+    public ServiceBean setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ServiceBean setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getService() {
         return service;
     }
 
-    public void setService(String service) {
+    public ServiceBean setService(String service) {
         this.service = service;
+        return this;
     }
 
     public Map<String, Param> getParams() {
         return params;
     }
 
-    public void setParams(Map<String, Param> params) {
+    public ServiceBean setParams(Map<String, Param> params) {
         this.params = params;
+        return this;
     }
 
     public Map<String, Param> getResult() {
         return result;
     }
 
-    public void setResult(Map<String, Param> result) {
+    public ServiceBean setResult(Map<String, Param> result) {
         this.result = result;
+        return this;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public ServiceBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public VerticleBean getVerticle() {
         return verticle;
     }
 
-    public void setVerticle(VerticleBean verticle) {
+    public ServiceBean setVerticle(VerticleBean verticle) {
         this.verticle = verticle;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ServiceBean{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", service='" + service + '\'' +
+                ", params=" + params +
+                ", result=" + result +
+                ", verticle=" + verticle +
+                '}';
     }
 }

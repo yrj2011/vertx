@@ -27,7 +27,7 @@ public class FirstChain {
         bean.setName("测试");
         bean.setAvaiable(true);
         bean.setPath("/hello");
-        bean.setMethod(HttpMethod.GET);
+        bean.setMethod(new HttpMethod[]{HttpMethod.GET});
 
         LinkedList<ServiceBean> service = new LinkedList<>();
 

@@ -65,6 +65,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
                 .collect(Collectors.toList());
         buildChain(chainConfigurations);
 
+        logger.debug("链构建完毕，开始部署自启动组件");
+
         // 部署自动服务
         this.verticles
                 .values()
@@ -85,6 +87,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
         if (verticles == null || verticles.size() == 0) {
             return;
         }
+        logger.info("开始扫描组件及其服务");
+
         verticles.stream()
                 .forEach(c -> {
 
@@ -111,6 +115,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
                             .setWorkerPoolName(vert.workerPoolName())
                             .setMaxWorkerExecuteTime(vert.maxWorkerExecuteTime());
                     verticleBean.setDeploymentOptions(options);
+
+                    logger.info("开始扫描 " + vert.name() + " 组件的服务");
 
                     // 组装服务
                     Class service = vert.service();
@@ -140,6 +146,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
                                         });
                                 serviceBean.setParams(params);
                                 serviceBean.setVerticle(verticleBean);
+
+                                logger.debug("扫描到服务名为：" + serviceBean.getName() + " 服务所在类为：" + service.getName());
                                 return serviceBean;
                             })
                             .collect(Collectors.toSet());
@@ -157,6 +165,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
         if (chainConfigurations == null || chainConfigurations.size() == 0) {
             return;
         }
+        logger.debug("服务扫描完毕，开始构建链");
 
         // 读取带有@Chain注解的方法，并执行这个方法，拿到链
         chainConfigurations.stream().forEach(c -> {
@@ -181,6 +190,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
                                 logger.warn(r.getName() + " 方法返回值为空，或者不为ChainBean对象");
                             } else {
                                 ChainBean chain = (ChainBean) res;
+                                logger.debug("映射地址为:" + chain.getPath() + " 链定义类为： " + c.getName() + " 链执行的服务为： " + chain.getServices());
                                 chains.add(chain);
                             }
                         } catch (Exception e) {

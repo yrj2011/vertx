@@ -25,6 +25,7 @@ public class ParameterConstructorFactory {
     static {
         // 注册默认的类型处理器
         parameterConstructorConcurrentHashMap.put(JsonObject.class.getName(), new JsonParamInject());
+        parameterConstructorConcurrentHashMap.put(String.class.getName(), new StringParamInject());
     }
 
     private ParameterConstructorFactory() {

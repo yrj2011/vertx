@@ -1,6 +1,8 @@
 package com.kingh.vertx.common.bean;
 
+import io.vertx.core.Handler;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.ext.web.RoutingContext;
 
 import java.util.LinkedList;
 
@@ -31,7 +33,7 @@ public class ChainBean {
     /**
      * 支持方法
      */
-    private HttpMethod method; // get or post ...
+    private HttpMethod[] methods; // get or post ...
 
     /**
      * 服务
@@ -47,6 +49,19 @@ public class ChainBean {
      * 排序位置
      */
     private Integer pos = 100;
+
+    /**
+     * 是否为普通链
+     * <p>
+     * true 普通链
+     * false 特殊链，特殊链需要指定Handler, 并且建议特殊链指定的pos值小于100
+     */
+    private boolean general = true;
+
+    /**
+     * 当链为特殊链的时候，可以直接指定Handler
+     */
+    private Handler<RoutingContext> handler;
 
     public String getName() {
         return name;
@@ -75,12 +90,12 @@ public class ChainBean {
         return this;
     }
 
-    public HttpMethod getMethod() {
-        return method;
+    public HttpMethod[] getMethods() {
+        return methods;
     }
 
-    public ChainBean setMethod(HttpMethod method) {
-        this.method = method;
+    public ChainBean setMethod(HttpMethod[] methods) {
+        this.methods = methods;
         return this;
     }
 
@@ -108,6 +123,24 @@ public class ChainBean {
 
     public ChainBean setPos(Integer pos) {
         this.pos = pos;
+        return this;
+    }
+
+    public boolean isGeneral() {
+        return general;
+    }
+
+    public ChainBean setGeneral(boolean general) {
+        this.general = general;
+        return this;
+    }
+
+    public Handler<RoutingContext> getHandler() {
+        return handler;
+    }
+
+    public ChainBean setHandler(Handler<RoutingContext> handler) {
+        this.handler = handler;
         return this;
     }
 }
