@@ -6,6 +6,8 @@ import java.lang.annotation.*;
 
 /**
  * 标注此注解的方法，必须返回一个ChainBean 用于构建链
+ * <p>
+ * 方法构建的链和注解指定的不一致时，使用注解中指定的为准
  *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
@@ -57,5 +59,12 @@ public @interface Chain {
      * @return
      */
     HttpMethod[] methods() default {};
+
+    /**
+     * 链的执行位次
+     *
+     * @return
+     */
+    int pos() default 100;
 
 }
