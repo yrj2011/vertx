@@ -5,14 +5,11 @@ import com.kingh.vertx.common.bean.ServiceBean;
 import com.kingh.vertx.core.exector.param.ParameterConstructor;
 import io.vertx.core.*;
 import io.vertx.core.eventbus.DeliveryOptions;
-import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerRequest;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
-import org.apache.commons.lang3.StringUtils;
 import rx.Single;
 
 import java.util.LinkedList;
@@ -23,12 +20,13 @@ import java.util.Map;
  * 执行器
  * <p>
  * 0. 完成无参的链式调用  √
- * 1. 指定参数完成链的调用，数据格式统一使用JsonObject √
- * 2. 构造查询参数完成链的调用,数据格式统一使用JsonObject
- * 3. 构造表单参数完成链的调用，数据格式统一使用JsonObject
- * 4. 构造Json数据完成链的调用，数据格式统一使用JsonObject
- * 5. 组合构造参数
- * 6. 数据格式可以使用HttpServerRequest,HttpServerResponse,RoutingContext 等
+ * 1. 指定参数完成链的调用，数据格式统一使用String √
+ * 2. 构造查询参数完成链的调用,数据格式统一使用String √
+ * 3. 构造表单参数完成链的调用，数据格式统一使用String √
+ * 4. 构造Json数据完成链的调用，数据格式统一使用String √
+ * 5. 组合构造参数 √
+ * 6. 参数注入支持JsonObject 类型和 String类型
+ * 7. 数据格式可以使用HttpServerRequest,HttpServerResponse,RoutingContext 等
  *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
