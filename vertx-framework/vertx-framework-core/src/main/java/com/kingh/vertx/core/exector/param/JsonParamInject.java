@@ -18,6 +18,27 @@ public class JsonParamInject implements ParameterConstructor {
 
     @Override
     public Map.Entry<String, Object> constructor(ServiceBean.Param param, RoutingContext context, JsonObject data, Vertx vertx) {
-        return null;
+        return new Map.Entry<String, Object>() {
+            @Override
+            public String getKey() {
+                return param.getName();
+            }
+
+            @Override
+            public Object getValue() {
+
+                /*
+                 *  TODO 待优化 可以根据不同的key 来处理，注入不同的JsonObject，目前是将用户请求上来的数据，全部给
+                 */
+                String name = getKey();
+
+                return data;
+            }
+
+            @Override
+            public Object setValue(Object value) {
+                return null;
+            }
+        };
     }
 }

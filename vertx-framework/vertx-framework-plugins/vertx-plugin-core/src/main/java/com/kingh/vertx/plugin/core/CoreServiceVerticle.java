@@ -9,7 +9,7 @@ import io.vertx.serviceproxy.ServiceBinder;
  * @version 1.0
  * @date 2019/3/22 19:27
  */
-@Verticle(name = "CoreServiceVerticle", address = CoreService.address, autoDeploy = true)
+@Verticle(name = "CoreServiceVerticle", address = CoreService.address, autoDeploy = true,service = CoreService.class)
 public class CoreServiceVerticle extends AbstractVerticle {
 
     @Override

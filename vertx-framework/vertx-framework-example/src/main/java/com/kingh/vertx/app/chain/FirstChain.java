@@ -31,8 +31,8 @@ public class FirstChain {
 
         LinkedList<ServiceBean> service = new LinkedList<>();
 
-        service.addLast(ac.service("db:hello"));
-        service.addLast(ac.service("db:world"));
+        service.addLast(ac.service("CoreServiceVerticle:hello"));
+        service.addLast(ac.service("CoreServiceVerticle:world"));
 
         bean.setServices(service);
 

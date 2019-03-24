@@ -127,6 +127,7 @@ public class ChainExector {
             if (res.succeeded()) {
                 // 响应数据
                 JsonObject obj = res.result().body();
+
                 resultHandler.handle(Future.succeededFuture(res.result().body()));
             } else {
                 res.cause().printStackTrace();

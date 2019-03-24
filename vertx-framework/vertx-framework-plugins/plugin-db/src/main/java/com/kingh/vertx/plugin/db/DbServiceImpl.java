@@ -88,13 +88,5 @@ public class DbServiceImpl implements DbService {
 //        }
     }
 
-    @Override
-    public void hello(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
-        resultHandler.handle(Future.succeededFuture(new JsonObject().put("name", "Hello " + name)));
-    }
 
-    @Override
-    public void world(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
-        resultHandler.handle(Future.succeededFuture(new JsonObject().put("msg", " World " + name)));
-    }
 }

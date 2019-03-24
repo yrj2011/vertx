@@ -28,5 +28,10 @@
             <artifactId>plugin-listener</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.stu.vertx</groupId>
+            <artifactId>vertx-plugin-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

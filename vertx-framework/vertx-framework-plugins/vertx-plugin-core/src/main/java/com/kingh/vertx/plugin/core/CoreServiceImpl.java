@@ -1,11 +1,10 @@
 package com.kingh.vertx.plugin.core;
 
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
 
 /**
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
@@ -21,8 +20,12 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public void bodyHandler(RoutingContext context, Handler<AsyncResult<JsonObject>> resultHandler) {
-        BodyHandler handler = BodyHandler.create();
-        handler.handle(context);
+    public void hello(String name, Handler<AsyncResult<JsonObject>> resultHandler) {
+        resultHandler.handle(Future.succeededFuture(new JsonObject().put("name", "Hello " + name)));
+    }
+
+    @Override
+    public void world(JsonObject data, Handler<AsyncResult<JsonObject>> resultHandler) {
+        resultHandler.handle(Future.succeededFuture(new JsonObject().put("msg", data)));
     }
 }

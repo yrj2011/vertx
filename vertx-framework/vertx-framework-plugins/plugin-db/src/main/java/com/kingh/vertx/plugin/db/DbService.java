@@ -31,10 +31,4 @@ public interface DbService {
     @Service(name = "update", description = "更新数据库操作")
     void update(@Param(name = "sql",must = true, description = "要执行的SQL") String sql, @Param(name = "params",description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 
-    @Service(name = "hello", description = "测试服务")
-    void hello(@Param(name = "name", description = "名字") String name, Handler<AsyncResult<JsonObject>> resultHandler);
-
-    @Service(name = "world", description = "测试服务")
-    void world(@Param(name = "name", description = "名字") String name, Handler<AsyncResult<JsonObject>> resultHandler);
-
 }
