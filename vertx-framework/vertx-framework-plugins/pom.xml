@@ -15,6 +15,7 @@
         <module>plugin-db</module>
         <module>plugin-listener</module>
         <module>plugin-mgr</module>
+        <module>vertx-plugin-core</module>
     </modules>
 
 
