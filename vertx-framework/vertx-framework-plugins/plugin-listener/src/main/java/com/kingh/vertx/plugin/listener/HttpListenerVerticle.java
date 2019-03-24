@@ -10,17 +10,21 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * 监听组件，用于接收HTTP客户端请求，并给客户端响应
+ *
+ * 1. 根据请求地址，调起流程，拿到流程的执行结果给客户端响应
+ *
+ *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
  * @date 2019/3/20 13:25
  */
-@Verticle(name = "ListenerVerticle", description = "监听客户端请求", autoDeploy = true)
-public class ListenerVerticle extends AbstractVerticle {
+@Verticle(name = "HttpListenerVerticle", description = "监听客户端请求", autoDeploy = true)
+public class HttpListenerVerticle extends AbstractVerticle {
 
     private ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
 
@@ -38,7 +42,7 @@ public class ListenerVerticle extends AbstractVerticle {
 
         // 交给链处理
         List<ChainBean> chains = applicationContext.chains();
-        chains.stream().filter(ChainBean::isAvaiable).forEach(c -> {
+        chains.stream().filter(ChainBean::isAvaiable).sorted(Comparator.comparing(ChainBean::getPos)).forEach(c -> {
             router.route(c.getPath()).method(c.getMethod()).handler(con -> {
                 // 调用链,处理结果
                 ChainExector.execute(c, con, vertx, re -> {
