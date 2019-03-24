@@ -18,16 +18,13 @@ import java.util.LinkedList;
 @ChainConfiguration
 public class FirstChain {
 
-    private ApplicationContext ac = ApplicationContextHolder.getApplicationContext();
+    private ApplicationContext ac = ApplicationContextHolder
+            .getApplicationContext();
 
-    @Chain
+    @Chain(path = "/world", name = "测试链", methods = {HttpMethod.GET})
     public ChainBean chain() {
 
         ChainBean bean = new ChainBean();
-        bean.setName("测试");
-        bean.setAvaiable(true);
-        bean.setPath("/hello");
-        bean.setMethod(new HttpMethod[]{HttpMethod.GET});
 
         LinkedList<ServiceBean> service = new LinkedList<>();
 
@@ -35,6 +32,19 @@ public class FirstChain {
         service.addLast(ac.service("CoreServiceVerticle:world"));
 
         bean.setServices(service);
+
+        return bean;
+    }
+
+
+    @Chain(path = "/hello", name = "测试链", methods = {HttpMethod.GET}, general = false)
+    public ChainBean hello() {
+
+        ChainBean bean = new ChainBean();
+
+        bean.setHandler(rc -> {
+            rc.request().response().end("Hello");
+        });
 
         return bean;
     }
