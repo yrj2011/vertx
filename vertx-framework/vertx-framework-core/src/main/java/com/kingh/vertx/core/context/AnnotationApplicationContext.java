@@ -183,6 +183,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
             Arrays.stream(methods)
                     .filter(r -> r.isAnnotationPresent(Chain.class))
                     .forEach(r -> {
+                        Chain chainAnno = r.getAnnotation(Chain.class);
                         try {
                             Object res = r.invoke(instance);
                             if (res == null || !(res instanceof ChainBean)) {
@@ -190,6 +191,14 @@ public class AnnotationApplicationContext implements ApplicationContext {
                                 logger.warn(r.getName() + " 方法返回值为空，或者不为ChainBean对象");
                             } else {
                                 ChainBean chain = (ChainBean) res;
+                                // 设置链的属性
+                                chain.setGeneral(chainAnno.general())
+                                        .setPos(chainAnno.pos())
+                                        .setName(chainAnno.name())
+                                        .setAvaiable(chainAnno.avaiable())
+                                        .setPath(chainAnno.path())
+                                        .setMethod(chainAnno.methods())
+                                        .setDescription(chainAnno.description());
                                 logger.debug("映射地址为:" + chain.getPath() + " 链定义类为： " + c.getName() + " 链执行的服务为： " + chain.getServices());
                                 chains.add(chain);
                             }
