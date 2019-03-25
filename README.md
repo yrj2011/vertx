@@ -24,13 +24,13 @@ Vert.xÊÇ¼Ü¹¹ÔÚNettyÉÏµÄÒ»¸öÒì²½¿ª·¢¿ò¼Ü£¬ÒÔÆäĞ¡ÇÉ¡¢Áé»î¡¢ÇáÁ¿µÄÌØĞÔÎüÒıÁËÒ»´óÅúµ
 
 ÏµÍ³ÕûÌå½á¹¹ÈçÍ¼ËùÊ¾
 
-<img src="https://raw.githubusercontent.com/happy-fly/vertx/master/vertx-framework/src/%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84%E5%9B%BE.png"/>
+![img Í¼Æ¬](https://raw.githubusercontent.com/happy-fly/vertx/master/vertx-framework/src/%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84%E5%9B%BE.png)
 
 ¿ª·¢Õß²»ĞèÒªÈ¥¹Ø×¢Vert.xµ×²ãÏ¸½Ú£¬Ö»ĞèÒª´´½¨×Ô¼ºµÄVerticle£¬²¢ÔÚVerticleÖĞ·¢²¼×Ô¼ºµÄ·şÎñ£¬È»ºó½«¿ª·¢µÄ·şÎñ°´ÕÕĞèÒªÅÅÁĞ×éºÏ´®µ½Ò»Æğ£¬ĞÎ³É·şÎñÁ´£¬ÓÃÀ´¶ÔÊÂ¼şµÄ´¦Àí¡£
 
 Õâ¸ö¹ı³ÌËµÆğÀ´±È½Ï·±Ëö£¬¶øÇÒ²»ºÃÀí½â£¬¿´ÏÂÃæµÄÍ¼£¬Ó¦¸Ã¾Í±È½ÏÇåÎúÁË
 
-<img src="https://raw.githubusercontent.com/happy-fly/vertx/master/vertx-framework/src/%E6%9C%8D%E5%8A%A1%E9%93%BE%E5%BC%80%E5%8F%91%E7%BB%93%E6%9E%84%E5%9B%BE.png"/>
+![img Í¼Æ¬](https://raw.githubusercontent.com/happy-fly/vertx/master/vertx-framework/src/%E6%9C%8D%E5%8A%A1%E9%93%BE%E5%BC%80%E5%8F%91%E7%BB%93%E6%9E%84%E5%9B%BE.png)
 
 ĞèÒª¿ª·¢Õß¿ª·¢µÄÊÇ×é¼ş£¬×é¼şÖĞ¿ÉÒÔ·¢²¼¶à¸ö·şÎñ£¬Ã¿¸ö·şÎñÊÇ×îĞ¡µÄÖ´ĞĞµ¥Ôª¡£
 
