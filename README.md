@@ -6,11 +6,11 @@ Vert.xÊÇ¼Ü¹¹ÔÚNettyÉÏµÄÒ»¸öÒì²½¿ª·¢¿ò¼Ü£¬ÒÔÆäÐ¡ÇÉ¡¢Áé»î¡¢ÇáÁ¿µÄÌØÐÔÎüÒýÁËÒ»´óÅúµ
 
 ## Ä£¿éËµÃ÷
 
-Õâ¸öÏîÄ¿ÊÇÒ»¸öMaven¾ÛºÏÏîÄ¿£¬°üº¬ºÜ¶àµÄÐ¡Ä£¿é£¬ÒÔvertx-¿ªÍ·µÄÄ£¿éÎªVert.xºËÐÄÄ£¿é£¬ext-¿ªÍ·µÄÄ£¿éÎªÀ©Õ¹Ä£¿é£¬Ö÷ÒªÊÇÒ»Ð©ÔÚVert.xÄ£¿éÖÐÓÃµ½µÄ¼¼ÊõÀ©Õ¹£¬ÕâÀï¼òµ¥¶Ô¸÷Ð¡Ä£¿é½øÐÐ½éÉÜ¡£
+Õâ¸öÏîÄ¿ÊÇÒ»¸öMaven¾ÛºÏÏîÄ¿£¬°üº¬ºÜ¶àµÄÐ¡Ä£¿é£¬ÒÔvertx-¿ªÍ·µÄÄ£¿éÊÇÊ¹ÓÃVert.xÎªºËÐÄºËÐÄ¼¼ÊõÄ£¿é£¬°üº¬Ò»Ð©ÑÝÊ¾°¸ÀýºÍVert.x¿ò¼Ü¡£ÒÔext-¿ªÍ·µÄÄ£¿éÎªÀ©Õ¹Ä£¿é£¬Ö÷ÒªÊÇÒ»Ð©ÔÚVert.xÄ£¿éÖÐÓÃµ½µÄ¼¼ÊõÀ©Õ¹£¬ÕâÀï¼òµ¥¶Ô¸÷Ð¡Ä£¿é½øÐÐ½éÉÜ¡£
 
 ### vertx-blog-demo
 
-Õâ¸öÄ£¿éÊÇÎÒ±àÐ´µÄ²¿·Ö²©¿ÍÎÄÕÂÖÐ¶ÔÓ¦µÄ°¸Àý´úÂë£¬°üº¬ÁËVert.x×îÎª»ù´¡µÄÒ»Ð©°¸Àý¡£
+Õâ¸öÄ£¿éÊÇÎÒÔÚÐ´²©¿ÍÊ±£¬ÓÃµ½µÄ°¸Àý´úÂë¡£°üº¬ÁËVert.x×îÎª»ù´¡µÄÒ»Ð©°¸Àý¡£
 
 ²©¿ÍµÄµØÖ·Îª£º<a href="https://blog.csdn.net/king_kgh">https://blog.csdn.net/king_kgh</a>
 
@@ -20,9 +20,57 @@ Vert.xÊÇ¼Ü¹¹ÔÚNettyÉÏµÄÒ»¸öÒì²½¿ª·¢¿ò¼Ü£¬ÒÔÆäÐ¡ÇÉ¡¢Áé»î¡¢ÇáÁ¿µÄÌØÐÔÎüÒýÁËÒ»´óÅúµ
 
 ### vertx-framework
 
-Õâ¸öÄ£¿éÒ²ÊÇÒ»¸ö¾ÛºÏÏîÄ¿£¬ÆÚÍû´òÔìÒ»¸ö±ã½ÝµÄVert.x¿ª·¢¿ò¼Ü£¬ÄÜ¹»¿ìËÙµÄ¿ª·¢Web·þÎñ£¬²¢ÊµÊ±¼à¿ØVert.xÓ¦ÓÃÐÔÄÜ¡£
+ÕâÊÇÒ»¸öÎ¢ÄÚºËµÄVert.x¿ò¼Ü£¬ÄÚºËÖÐ½öÌá¹©¼«ÉÙµÄÖ§³Ö¹¦ÄÜÒÔ¼°ÓÐÏÞ¸ö×¢½â£¬´ó²¿·Ö¹¦ÄÜÒÀ¿¿²å¼þÀ´Íê³É¡£
 
-¸ÃÄ£¿éÄ¿Ç°»¹ÔÚÐèÇó½×¶Î
+¿ª·¢Õß²»ÐèÒªÈ¥¹Ø×¢Vert.xµ×²ãÏ¸½Ú£¬Ö»ÐèÒª´´½¨×Ô¼ºµÄVerticle£¬²¢ÔÚVerticleÖÐ·¢²¼×Ô¼ºµÄ·þÎñ£¬È»ºó½«¿ª·¢µÄ·þÎñ°´ÕÕÐèÒªÅÅÁÐ×éºÏ´®µ½Ò»Æð£¬ÐÎ³É·þÎñÁ´£¬ÓÃÀ´¶ÔÊÂ¼þµÄ´¦Àí¡£
+
+µ±ÓÐÊÂ¼þµ½À´£¬¿ò¼Ü»áÕÒµ½ºÏÀíµÄ·þÎñÁ´½øÐÐÖ´ÐÐ£¬²¢½«·þÎñÁ´µÄÖ´ÐÐ½á¹û½âÎö²¢ÏìÓ¦¸ø¿Í»§¶Ë¡£
+
+¿ò¼ÜÖ§³Öµ¥»úÄ£Ê½ºÍ¼¯ÈºÄ£Ê½(Ä¿Ç°½öÖ§³Öµ¥»úÄ£Ê½)¡£
+
+¿ò¼ÜÌá¹©Ç¿´óµÄ¼à¿ØÄÜÁ¦£¬ÄÜ¹»¼à¿ØÃ¿Ò»¸öÊÂ¼þµÄÖ´ÐÐÇé¿ö£¬°üÀ¨·þÎñ´®µÄÃ¿¸ö·þÎñµÄÖ´ÐÐ½á¹û£¬ÏìÓ¦Ê±¼ä£¬Á´Â·µÄÖ´ÐÐÎ»ÖÃµÈµÈ¡£(»¹ÔÚÊµÏÖÖÐ)
+
+ÏÂÃæÊÇ¿ò¼ÜµÄÕûÌå½á¹¹
+
+#### vertx-framework-common
+
+Ìá¹©Ò»Ð©¹«¹²µÄ¹¤¾ßÀà£¬½Ó¿ÚÒÔ¼°×¢½â
+
+#### vertx-framework-core
+
+·â×°¿ò¼ÜµÄºËÐÄ·þÎñ£¬°üÀ¨Ö´ÐÐÒýÇæ£¬ÔËÐÐÉÏÏÂÎÄµÈ¡£
+
+#### vertx-framework-plugins
+
+ÕâÀïÊÇ¹Ù·½Ìá¹©µÄÒ»Ð©²å¼þ£¬°üÀ¨HTTP¼àÌýµÄ²å¼þÀ´ÊµÏÖ¶ÔWebÓ¦ÓÃµÄÖ§³Ö£¬Êý¾Ý¿â²å¼þÀ´Ö§³ÖÊý¾Ý¿âµÄ²Ù×÷µÈµÈ£¬¾ßÌåÈçÏÂ
+
+##### plugin-db
+
+Êý¾Ý¿â²å¼þ£¬ÓÃÓÚ¶ÔÊý¾Ý¿âµÄµ÷ÓÃ
+
+##### plugin-listener
+
+HTTP¼àÌý×é¼þ£¬ÓÃÓÚ¶ÔHTTPÇëÇóµÄÖ§³ÖÓëÏìÓ¦
+
+##### plugin-mgr
+
+¿ò¼ÜµÄ¼à¿ØºÍ¹ÜÀíµÄ¿ØÖÆÌ¨£¬ÕâÊÇÒ»¸öWebÓ¦ÓÃ¡£
+
+¹ÜÀí¹¦ÄÜ°üÀ¨£º
+
+* ¿ØÖÆ×é¼þ(Verticle)µÄÆôÓÃÓëÍ£ÓÃ
+* ¿ØÖÆ·þÎñÁ´µÄÆô¶¯ÓëÍ£ÓÃ
+* ¿ØÖÆ·þÎñ¼¶±ð¶Ïµã
+
+¼à¿Ø¹¦ÄÜ°üÀ¨£º
+
+* ¼à¿ØÊµÊ±ÇëÇóÃ÷Ï¸
+* ¼à¿ØÃ¿¸öÇëÇóÖ´ÐÐÏ¸½Ú(ÄÄ¸ö·þÎñÁ´Ìá¹©·þÎñ£¬µ±Ç°Ö´ÐÐµ½ÄÄ¸ö·þÎñ£¬Ã¿¸ö·þÎñ½ÓÊÕµÄ²ÎÊýÒÔ¼°´¦ÀíºóµÄÏìÓ¦)
+* ¼à¿ØÊý¾Ý¿âÐÔÄÜ¡¢·þÎñÆ÷ÐÔÄÜ¡¢´ÅÅÌÈÝÁ¿µÈ(Õâ¸ö²»ÊÇÖØµã£¬ÓëVert.x¼¼ÊõÎÞ¹Ø)
+
+¸¨Öú¹¦ÄÜ£º
+
+* ÍÏ×§Éú³É·þÎñÁ´(µÚÒ»¸ö¼¶±ðÊÇÉú³ÉJava´úÂë£¬µÚ¶þ¸ö¼¶±ðÊÇÉú³Éclass×Ö½ÚÂë£¬µÚÈý¸ö¼¶±ðÊÇÉú³Éjar)
 
 ### vertx-stu-manager
 
