@@ -48,6 +48,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
 
     @Override
     public void run() {
+        long statTime = System.currentTimeMillis();
+
         // 扫描所有的类
         classes = Scanner.scanner("");
 
@@ -76,6 +78,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
                     coreService.deployVerticle(v, res -> {
                     });
                 });
+
+        logger.debug("系统核心启动成功，耗时 " + (System.currentTimeMillis() - statTime) + " ms");
     }
 
     /**
