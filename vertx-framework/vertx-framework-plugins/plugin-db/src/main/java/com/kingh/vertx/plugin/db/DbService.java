@@ -9,6 +9,10 @@ import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.rxjava.ext.unit.Async;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
@@ -29,6 +33,14 @@ public interface DbService {
     void query(@Param(name = "sql", must = true, description = "要执行的SQL") String sql, @Param(name = "params", description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 
     @Service(name = "update", description = "更新数据库操作")
-    void update(@Param(name = "sql",must = true, description = "要执行的SQL") String sql, @Param(name = "params",description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
+    void update(@Param(name = "sql", must = true, description = "要执行的SQL") String sql, @Param(name = "params", description = "SQL中的参数") JsonArray params, Handler<AsyncResult<JsonObject>> resultHandler);
 
+    /**
+     * 带有事务的批处理
+     *
+     * @param sql
+     * @param resultHandler
+     */
+    @Service(name = "updateWithTx", description = "更新数据库操作")
+    void update(@Param(name = "sql", must = true, description = "要执行的SQL") JsonArray sql, Handler<AsyncResult<JsonObject>> resultHandler);
 }
