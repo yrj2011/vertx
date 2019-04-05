@@ -10,10 +10,10 @@ public class JdbcUtils {
 
 	public JdbcUtils(Vertx vertx) {
 		JsonObject dbConfig = new JsonObject();
-		dbConfig.put("url", "jdbc:mysql://192.168.40.66:3306/test");
-		dbConfig.put("driver_class", "com.mysql.jdbc.Driver");
-		dbConfig.put("user", "xxxx");
-		dbConfig.put("password", "xxxx");
+		dbConfig.put("url", "jdbc:mysql://localhost:3306/vertx?serverTimezone=UTC&characterEncoding=utf8");
+		dbConfig.put("driver_class", "com.mysql.cj.jdbc.Driver");
+		dbConfig.put("user", "my");
+		dbConfig.put("password", "m123456.");
 
 		dbClient = JDBCClient.createShared(vertx, dbConfig);
 	}
