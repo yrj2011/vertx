@@ -4,6 +4,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.RoutingContext;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -43,12 +44,12 @@ public class ChainBean {
     /**
      * 是否启用链
      */
-    private boolean avaiable;
+    private Boolean avaiable;
 
     /**
      * 排序位置
      */
-    private Integer pos = 100;
+    private Integer pos;
 
     /**
      * 是否为普通链
@@ -56,7 +57,7 @@ public class ChainBean {
      * true 普通链
      * false 特殊链，特殊链需要指定Handler, 并且建议特殊链指定的pos值小于100
      */
-    private boolean general = true;
+    private Boolean general;
 
     /**
      * 当链为特殊链的时候，可以直接指定Handler
@@ -108,11 +109,11 @@ public class ChainBean {
         return this;
     }
 
-    public boolean isAvaiable() {
+    public Boolean isAvaiable() {
         return avaiable;
     }
 
-    public ChainBean setAvaiable(boolean avaiable) {
+    public ChainBean setAvaiable(Boolean avaiable) {
         this.avaiable = avaiable;
         return this;
     }
@@ -126,11 +127,11 @@ public class ChainBean {
         return this;
     }
 
-    public boolean isGeneral() {
+    public Boolean isGeneral() {
         return general;
     }
 
-    public ChainBean setGeneral(boolean general) {
+    public ChainBean setGeneral(Boolean general) {
         this.general = general;
         return this;
     }
@@ -142,5 +143,20 @@ public class ChainBean {
     public ChainBean setHandler(Handler<RoutingContext> handler) {
         this.handler = handler;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ChainBean{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", path='" + path + '\'' +
+                ", methods=" + Arrays.toString(methods) +
+                ", services=" + services +
+                ", avaiable=" + avaiable +
+                ", pos=" + pos +
+                ", general=" + general +
+                ", handler=" + handler +
+                '}';
     }
 }
