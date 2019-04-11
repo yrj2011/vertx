@@ -3,6 +3,7 @@ package com.kingh.vertx.plugin.listener.chain;
 import com.kingh.vertx.common.anno.Chain;
 import com.kingh.vertx.common.anno.ChainConfiguration;
 import com.kingh.vertx.common.bean.ChainBean;
+import com.kingh.vertx.core.config.Value;
 import io.vertx.ext.web.handler.FaviconHandler;
 
 /**
@@ -15,11 +16,13 @@ import io.vertx.ext.web.handler.FaviconHandler;
 @ChainConfiguration
 public class FaviconHandlerChain {
 
+    @Value(key = "chain.FaviconHandler.avaiable")
+    private Boolean avaiable = false;
 
     @Chain
     public ChainBean faviconHandlerChain() {
         return new ChainBean()
-                .setAvaiable(true)
+                .setAvaiable(avaiable)
                 .setName("FaviconHandler")
                 .setGeneral(false)
                 .setHandler(FaviconHandler.create())

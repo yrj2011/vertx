@@ -21,7 +21,6 @@ public class BodyHandlerChain {
 
     @Chain
     public ChainBean bodyHanlderChain() {
-        System.out.println(avaiable);
         return new ChainBean()
                 .setAvaiable(avaiable)
                 .setName("BodyHandler")
