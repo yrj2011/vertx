@@ -40,7 +40,7 @@ public class StuManagerStarter extends AbstractVerticle {
         router.route("/page/*").handler(templateHandler);
         router.route().handler(MainRouter.create(vertx));
 
-        server.requestHandler(router::accept);
+        server.requestHandler(router);
         server.listen(80, e -> System.out.println("服务启动成功！"));
     }
 
