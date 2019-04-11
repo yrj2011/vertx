@@ -9,10 +9,10 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -35,6 +35,8 @@ public class HttpListenerVerticle extends AbstractVerticle {
 
     private ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
 
+    private Logger logger = LoggerFactory.getLogger(HttpListenerVerticle.class);
+
     @Override
     public void start() throws Exception {
 
@@ -50,6 +52,7 @@ public class HttpListenerVerticle extends AbstractVerticle {
         // 交给链处理
         List<ChainBean> chains = applicationContext.chains();
         chains.stream().filter(ChainBean::isAvaiable).sorted(Comparator.comparing(ChainBean::getPos)).forEach(c -> {
+            logger.debug("绑定链给路由: " + c);
             Route routeTemp;
             if (c.getPath() == null || "".equals(c.getPath())) {
                 routeTemp = router.route();
