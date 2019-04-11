@@ -6,12 +6,16 @@ import com.kingh.vertx.common.bean.ServiceBean;
 import com.kingh.vertx.common.bean.VerticleBean;
 import com.kingh.vertx.common.constant.Status;
 import com.kingh.vertx.common.scan.Scanner;
+import com.kingh.vertx.core.config.ConfigUtils;
+import com.kingh.vertx.core.config.Value;
 import com.kingh.vertx.core.service.CoreService;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.security.auth.login.Configuration;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -65,7 +69,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
         List<Class> chainConfigurations = classes.stream()
                 .filter(c -> c.isAnnotationPresent(ChainConfiguration.class))
                 .collect(Collectors.toList());
-        buildChain(chainConfigurations);
+        buildChain(chainConfigurations, vertx);
 
         logger.debug("链构建完毕，开始部署自启动组件");
 
@@ -165,7 +169,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
      *
      * @param chainConfigurations
      */
-    private void buildChain(List<Class> chainConfigurations) {
+    private void buildChain(List<Class> chainConfigurations, Vertx vertx) {
         if (chainConfigurations == null || chainConfigurations.size() == 0) {
             return;
         }
@@ -173,8 +177,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
 
         // 读取带有@Chain注解的方法，并执行这个方法，拿到链
         chainConfigurations.stream().forEach(c -> {
-            // 取所有的方法
-            Method[] methods = c.getMethods();
+
             // 实例化对象
             Object obj;
             try {
@@ -183,13 +186,42 @@ public class AnnotationApplicationContext implements ApplicationContext {
                 throw new RuntimeException(c.getName() + " 实例化链配置对象失败");
             }
             Object instance = obj;
+
+            // 获取所有的字段并注入
+            Field[] fields = c.getDeclaredFields();
+            Arrays.stream(fields).filter(x -> x.isAnnotationPresent(Value.class)).forEach(x -> {
+                Value v = x.getAnnotation(Value.class);
+                String key = v.key();
+                Object value = ConfigUtils.getValue(key, x.getType());
+                if (value != null) {
+                    try {
+                        x.setAccessible(true);
+                        x.set(obj, ConfigUtils.getValue(key, x.getType()));
+                    } catch (Exception e) {
+                        throw new RuntimeException("注入属性失败", e);
+                    }
+                }
+            });
+
+            // 取所有的方法
+            Method[] methods = c.getMethods();
             // 遍历标有@Chain的方法
             Arrays.stream(methods)
                     .filter(r -> r.isAnnotationPresent(Chain.class))
                     .forEach(r -> {
                         Chain chainAnno = r.getAnnotation(Chain.class);
                         try {
-                            Object res = r.invoke(instance);
+                            // 链对象
+                            Object res = null;
+
+                            // 给这个方法按条件注入 Vertx 实例
+                            Class parameterTypes[] = r.getParameterTypes();
+                            if (parameterTypes == null || parameterTypes.length == 0) {
+                                res = r.invoke(instance);
+                            } else if (parameterTypes.length == 1 && parameterTypes[0].getName().contains("Vertx")) {
+                                // 目前仅支持注入Vertx对象
+                                res = r.invoke(instance, vertx);
+                            }
                             if (res == null || !(res instanceof ChainBean)) {
                                 // 不处理
                                 logger.warn(r.getName() + " 方法返回值为空，或者不为ChainBean对象");
