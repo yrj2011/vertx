@@ -3,6 +3,7 @@ package com.kingh.vertx.plugin.listener.chain;
 import com.kingh.vertx.common.anno.Chain;
 import com.kingh.vertx.common.anno.ChainConfiguration;
 import com.kingh.vertx.common.bean.ChainBean;
+import com.kingh.vertx.core.config.Value;
 import io.vertx.ext.web.handler.BodyHandler;
 
 /**
@@ -15,10 +16,14 @@ import io.vertx.ext.web.handler.BodyHandler;
 @ChainConfiguration
 public class BodyHandlerChain {
 
+    @Value(key = "chain.BodyHandler.avaiable")
+    private Boolean avaiable = true;
+
     @Chain
     public ChainBean bodyHanlderChain() {
+        System.out.println(avaiable);
         return new ChainBean()
-                .setAvaiable(true)
+                .setAvaiable(avaiable)
                 .setName("BodyHandler")
                 .setGeneral(false)
                 .setHandler(BodyHandler.create())
