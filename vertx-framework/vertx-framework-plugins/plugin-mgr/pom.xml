@@ -11,5 +11,12 @@
 
     <artifactId>plugin-mgr</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.stu.vertx</groupId>
+            <artifactId>vertx-framework-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
