@@ -20,6 +20,8 @@ import javax.security.auth.login.Configuration;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +37,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
     private Set<Class<?>> classes;
 
     // 系统运行的所有组件
-    private Map<String, VerticleBean> verticles = new HashMap<>();
+    private Map<String, VerticleBean> verticles;
 
     // 核心服务
     private CoreService coreService;
@@ -44,11 +46,13 @@ public class AnnotationApplicationContext implements ApplicationContext {
     private Vertx vertx;
 
     // 系统支持的所有链
-    private List<ChainBean> chains = new ArrayList<>();
+    private List<ChainBean> chains;
 
     public AnnotationApplicationContext() {
+        this.verticles = new ConcurrentHashMap<>();
         this.vertx = this.vertx == null ? Vertx.vertx() : this.vertx;
         this.coreService = CoreService.create(vertx);
+        this.chains = new CopyOnWriteArrayList<>();
         ApplicationContextHolder.setApplicationContext(this);
     }
 
