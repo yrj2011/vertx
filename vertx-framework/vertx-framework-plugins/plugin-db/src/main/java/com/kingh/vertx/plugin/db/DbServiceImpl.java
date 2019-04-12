@@ -70,7 +70,7 @@ public class DbServiceImpl implements DbService {
     }
 
     @Override
-    public void update(JsonArray sql, Handler<AsyncResult<JsonObject>> resultHandler) {
+    public void updateWithTx(JsonArray sql, Handler<AsyncResult<JsonObject>> resultHandler) {
         if (sql == null || sql.size() == 0) {
             resultHandler.handle(Future.failedFuture("参数错误，要执行的SQL语句为空！"));
             return;

@@ -42,5 +42,5 @@ public interface DbService {
      * @param resultHandler
      */
     @Service(name = "updateWithTx", description = "更新数据库操作")
-    void update(@Param(name = "sql", must = true, description = "要执行的SQL") JsonArray sql, Handler<AsyncResult<JsonObject>> resultHandler);
+    void updateWithTx(@Param(name = "sql", must = true, description = "要执行的SQL") JsonArray sql, Handler<AsyncResult<JsonObject>> resultHandler);
 }
