@@ -76,7 +76,7 @@ public class HttpListenerVerticle extends AbstractVerticle {
                 // 普通链，则启动链，并执行链
                 route.handler(con -> {
                     // 调用链,处理结果
-                    ChainExector.execute(c, con, vertx, re -> {
+                    applicationContext.execChain(c, con, re -> {
                         if (re.succeeded()) {
                             // 响应只支持JsonObject类型，具体内容通过JsonObject类型指定，页面渲染交给框架来做
                             JsonObject result = re.result();
