@@ -3,6 +3,8 @@ package com.kingh.vertx.core.exector;
 import com.kingh.vertx.common.bean.ChainBean;
 import com.kingh.vertx.common.bean.ServiceBean;
 import com.kingh.vertx.core.exector.param.ParameterConstructor;
+import com.kingh.vertx.core.runtime.RunContext;
+import com.kingh.vertx.core.runtime.bean.ChainRequest;
 import io.vertx.core.*;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.HttpServerRequest;
@@ -59,6 +61,8 @@ public class ChainExector {
         if (services == null || services.size() <= 0) {
             throw new RuntimeException("链的实例数为0，没有要执行的方法");
         }
+
+
 
         // 链中的实时数据
         JsonObject data = new JsonObject();
@@ -170,6 +174,5 @@ public class ChainExector {
 
         logger.debug("获取到的参数为：" + data);
         resultHandler.handle(Future.succeededFuture(data));
-
     }
 }
