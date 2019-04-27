@@ -8,15 +8,21 @@ import com.kingh.vertx.common.constant.Status;
 import com.kingh.vertx.common.scan.Scanner;
 import com.kingh.vertx.core.config.ConfigUtils;
 import com.kingh.vertx.core.config.Value;
+import com.kingh.vertx.core.exector.ChainExector;
+import com.kingh.vertx.core.runtime.RunContext;
+import com.kingh.vertx.core.runtime.RunContextImpl;
 import com.kingh.vertx.core.service.CoreService;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.RoutingContext;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.security.auth.login.Configuration;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -48,11 +54,15 @@ public class AnnotationApplicationContext implements ApplicationContext {
     // 系统支持的所有链
     private List<ChainBean> chains;
 
+    // 运行时上下文
+    private RunContext runContext;
+
     public AnnotationApplicationContext() {
         this.verticles = new ConcurrentHashMap<>();
         this.vertx = this.vertx == null ? Vertx.vertx() : this.vertx;
         this.coreService = CoreService.create(vertx);
         this.chains = new CopyOnWriteArrayList<>();
+        this.runContext = new RunContextImpl();
         ApplicationContextHolder.setApplicationContext(this);
     }
 
@@ -235,31 +245,31 @@ public class AnnotationApplicationContext implements ApplicationContext {
                                 ChainBean chain = (ChainBean) res;
                                 // 设置链的属性
                                 Boolean general = chain.isGeneral();
-                                if(general == null) {
+                                if (general == null) {
                                     chain.setGeneral(chainAnno.general());
                                 }
                                 Integer pos = chain.getPos();
-                                if(pos == null) {
+                                if (pos == null) {
                                     chain.setPos(chainAnno.pos());
                                 }
                                 String name = chain.getName();
-                                if(StringUtils.isBlank(name)) {
+                                if (StringUtils.isBlank(name)) {
                                     chain.setName(chainAnno.name());
                                 }
                                 Boolean avaiable = chain.isAvaiable();
-                                if(avaiable == null) {
+                                if (avaiable == null) {
                                     chain.setAvaiable(chainAnno.avaiable());
                                 }
                                 String path = chain.getPath();
-                                if(StringUtils.isBlank(path)) {
+                                if (StringUtils.isBlank(path)) {
                                     chain.setPath(chainAnno.path());
                                 }
                                 HttpMethod[] methods1 = chain.getMethods();
-                                if(methods1 == null || methods1.length == 0) {
+                                if (methods1 == null || methods1.length == 0) {
                                     chain.setMethod(chainAnno.methods());
                                 }
                                 String desc = chain.getDescription();
-                                if(StringUtils.isBlank(desc)) {
+                                if (StringUtils.isBlank(desc)) {
                                     chain.setDescription(chainAnno.description());
                                 }
 //                                chain.setGeneral(chainAnno.general())
@@ -309,8 +319,17 @@ public class AnnotationApplicationContext implements ApplicationContext {
     }
 
     @Override
+    public void execChain(ChainBean chain, RoutingContext context, Handler<AsyncResult<JsonObject>> resultHandler) {
+        ChainExector.execute(chain, context, vertx, resultHandler);
+    }
+
+    @Override
     public List<ChainBean> chains() {
         return chains;
     }
 
+    @Override
+    public RunContext runContxt() {
+        return this.runContext;
+    }
 }

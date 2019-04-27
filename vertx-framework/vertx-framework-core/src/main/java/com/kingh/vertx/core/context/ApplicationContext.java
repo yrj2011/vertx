@@ -2,7 +2,12 @@ package com.kingh.vertx.core.context;
 
 import com.kingh.vertx.common.bean.ChainBean;
 import com.kingh.vertx.common.bean.ServiceBean;
+import com.kingh.vertx.core.runtime.RunContext;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.RoutingContext;
 
 import java.util.List;
 
@@ -30,6 +35,15 @@ public interface ApplicationContext {
     Vertx vertx();
 
     /**
+     * 执行链
+     *
+     * @param chain
+     * @param context
+     * @param resultHandler
+     */
+    void execChain(ChainBean chain, RoutingContext context, Handler<AsyncResult<JsonObject>> resultHandler);
+
+    /**
      * 获取所有的链
      *
      * @return
@@ -48,4 +62,11 @@ public interface ApplicationContext {
      * 启动
      */
     void run();
+
+    /**
+     * 获取运行时上下文对象
+     *
+     * @return
+     */
+    RunContext runContxt();
 }
