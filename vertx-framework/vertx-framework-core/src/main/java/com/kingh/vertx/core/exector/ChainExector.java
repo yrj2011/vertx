@@ -73,9 +73,8 @@ public class ChainExector {
         String id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         logger.info("开始执行链：" + chain.getName() + " ID为：" + id);
 
-        JsonObject msg = new JsonObject();
-        msg.put("msg", "init");
-        String address = chain.getName() + ":" + id;
+        JsonObject msg = new JsonObject().put("path", chain.getPath()).put("name", chain.getName());
+        String address = "verticle:" + chain.getName() + ":" + id;
         bus.publish(address, msg);
 
         // 链中的实时数据
@@ -151,10 +150,12 @@ public class ChainExector {
                 // 响应数据
                 JsonObject obj = res.result().body();
 
-                String address = id + ":" + service.getId();
-                JsonObject msg = new JsonObject();
-                msg.put("msg", service.getId()).put("req", config).put("resp", obj);
-                bus.publish(address, msg);
+                String address = "service:" + service.getId() + ":" + id;
+                bus.publish(address, new JsonObject()
+                        .put("service", service.getId())
+                        .put("address", service.getVerticle().getAddress())
+                        .put("req", config)
+                        .put("resp", obj));
 
 
                 resultHandler.handle(Future.succeededFuture(res.result().body()));
