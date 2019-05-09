@@ -7,7 +7,9 @@ import com.kingh.vertx.core.runtime.RunContext;
 import com.kingh.vertx.core.runtime.bean.ChainRequest;
 import io.vertx.core.*;
 import io.vertx.core.eventbus.DeliveryOptions;
+import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -16,6 +18,7 @@ import rx.Single;
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
@@ -57,12 +60,23 @@ public class ChainExector {
             throw new RuntimeException("Vertx 实例为空，不能执行链");
         }
 
-        LinkedList<ServiceBean> services = chain.getServices();
-        if (services == null || services.size() <= 0) {
+        LinkedList<ServiceBean> servicess = chain.getServices();
+        if (servicess == null || servicess.size() <= 0) {
             throw new RuntimeException("链的实例数为0，没有要执行的方法");
         }
+        LinkedList<ServiceBean> services = new LinkedList<>();
+        services.addAll(servicess);
 
+        EventBus bus = vertx.eventBus();
 
+        // 生成链执行的唯一标识
+        String id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        logger.info("开始执行链：" + chain.getName() + " ID为：" + id);
+
+        JsonObject msg = new JsonObject();
+        msg.put("msg", "init");
+        String address = chain.getName() + ":" + id;
+        bus.publish(address, msg);
 
         // 链中的实时数据
         JsonObject data = new JsonObject();
@@ -76,13 +90,15 @@ public class ChainExector {
                 int index = 0;
                 while (services.size() > 0) {
                     ServiceBean service = services.removeFirst();
+
+                    // 第一次执行
                     if (index++ == 0) {
-                        r = rxExecutor(service, context, data, vertx);
+                        r = rxExecutor(id, service, context, data, vertx);
                     } else {
                         r = r.flatMap(ss -> {
                             // 构造数据
                             data.mergeIn(ss);
-                            return rxExecutor(service, context, data, vertx);
+                            return rxExecutor(id, service, context, data, vertx);
                         });
                     }
                 }
@@ -96,20 +112,21 @@ public class ChainExector {
         });
     }
 
-    public static Single<JsonObject> rxExecutor(ServiceBean serviceBean, RoutingContext context, JsonObject data, Vertx vertx) {
-        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> execute(serviceBean, context, data, vertx, fut)));
+    public static Single<JsonObject> rxExecutor(String id, ServiceBean serviceBean, RoutingContext context, JsonObject data, Vertx vertx) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> execute(id, serviceBean, context, data, vertx, fut)));
     }
 
     /**
      * 真正调用方法
      *
+     * @param id            执行链的ID
      * @param service       要调用的服务
      * @param context       请求上下文
      * @param data          封装的数据
      * @param vertx         vertx实例
      * @param resultHandler
      */
-    private static void execute(ServiceBean service, RoutingContext context, JsonObject data, Vertx vertx, Handler<AsyncResult<JsonObject>> resultHandler) {
+    private static void execute(String id, ServiceBean service, RoutingContext context, JsonObject data, Vertx vertx, Handler<AsyncResult<JsonObject>> resultHandler) {
         // 通过配置action参数，指定要走哪一个方法
         DeliveryOptions options = new DeliveryOptions();
         options.addHeader("action", service.getId());
@@ -126,11 +143,19 @@ public class ChainExector {
             config.put(entry.getKey(), entry.getValue());
         });
 
+        EventBus bus = vertx.eventBus();
+
         // 通过eventBus调用方法
-        vertx.eventBus().<JsonObject>send(service.getVerticle().getAddress(), config, options, res -> {
+        bus.<JsonObject>send(service.getVerticle().getAddress(), config, options, res -> {
             if (res.succeeded()) {
                 // 响应数据
                 JsonObject obj = res.result().body();
+
+                String address = id + ":" + service.getId();
+                JsonObject msg = new JsonObject();
+                msg.put("msg", service.getId()).put("req", config).put("resp", obj);
+                bus.publish(address, msg);
+
 
                 resultHandler.handle(Future.succeededFuture(res.result().body()));
             } else {
