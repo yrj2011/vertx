@@ -11,16 +11,15 @@
 
     <artifactId>vertx-framework-example</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.stu.vertx</groupId>
-            <artifactId>vertx-framework-core</artifactId>
+            <artifactId>plugin-db</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.stu.vertx</groupId>
-            <artifactId>plugin-db</artifactId>
+            <artifactId>vertx-plugin-monitor</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
