@@ -16,6 +16,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -31,6 +33,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
+ * 基于注解的上下文实现类
+ *
  * @author <a href="https://blog.csdn.net/king_kgh>Kingh</a>
  * @version 1.0
  * @date 2019/3/19 9:58
@@ -42,7 +46,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
     // 所有扫描出的类
     private Set<Class<?>> classes;
 
-    // 系统运行的所有组件
+    // 系统运行的所有静态组件
     private Map<String, VerticleBean> verticles;
 
     // 核心服务
@@ -57,12 +61,17 @@ public class AnnotationApplicationContext implements ApplicationContext {
     // 运行时上下文
     private RunContext runContext;
 
+    // 事件总线
+    private EventBus eventBus;
+
     public AnnotationApplicationContext() {
         this.verticles = new ConcurrentHashMap<>();
         this.vertx = this.vertx == null ? Vertx.vertx() : this.vertx;
         this.coreService = CoreService.create(vertx);
         this.chains = new CopyOnWriteArrayList<>();
         this.runContext = new RunContextImpl();
+        this.eventBus = vertx.eventBus();
+        listener();
         ApplicationContextHolder.setApplicationContext(this);
     }
 
@@ -73,23 +82,22 @@ public class AnnotationApplicationContext implements ApplicationContext {
         // 扫描所有的类
         classes = Scanner.scanner("");
 
-        // 分析类
-        List<Class> verticles = classes.stream()
-                .filter(c -> c.isAnnotationPresent(Verticle.class))
-                .collect(Collectors.toList());
-
         // 构建基础服务
-        buildService(verticles);
+        buildService();
 
         // 构建链
-        List<Class> chainConfigurations = classes.stream()
-                .filter(c -> c.isAnnotationPresent(ChainConfiguration.class))
-                .collect(Collectors.toList());
-        buildChain(chainConfigurations, vertx);
-
-        logger.debug("链构建完毕，开始部署自启动组件");
+        buildChain();
 
         // 部署自动服务
+        deployVerticle();
+
+        logger.debug("系统核心启动成功，耗时 " + (System.currentTimeMillis() - statTime) + " ms");
+    }
+
+    /**
+     * 部署Verticle
+     */
+    private void deployVerticle() {
         this.verticles
                 .values()
                 .stream()
@@ -98,16 +106,17 @@ public class AnnotationApplicationContext implements ApplicationContext {
                     coreService.deployVerticle(v, res -> {
                     });
                 });
-
-        logger.debug("系统核心启动成功，耗时 " + (System.currentTimeMillis() - statTime) + " ms");
     }
 
     /**
      * 构建服务
-     *
-     * @param verticles
      */
-    private void buildService(List<Class> verticles) {
+    private void buildService() {
+        // 分析类
+        List<Class> verticles = classes.stream()
+                .filter(c -> c.isAnnotationPresent(Verticle.class))
+                .collect(Collectors.toList());
+
         if (verticles == null || verticles.size() == 0) {
             return;
         }
@@ -182,10 +191,13 @@ public class AnnotationApplicationContext implements ApplicationContext {
 
     /**
      * 构建链
-     *
-     * @param chainConfigurations
      */
-    private void buildChain(List<Class> chainConfigurations, Vertx vertx) {
+    private void buildChain() {
+        // 构建链
+        List<Class> chainConfigurations = classes.stream()
+                .filter(c -> c.isAnnotationPresent(ChainConfiguration.class))
+                .collect(Collectors.toList());
+
         if (chainConfigurations == null || chainConfigurations.size() == 0) {
             return;
         }
@@ -318,6 +330,13 @@ public class AnnotationApplicationContext implements ApplicationContext {
         return this.vertx;
     }
 
+    /**
+     * 执行链产生的中间数据，均交由RunContext管理，或者发布到总线上
+     *
+     * @param chain         链的定义
+     * @param context       路由上下文
+     * @param resultHandler 执行结果处理器
+     */
     @Override
     public void execChain(ChainBean chain, RoutingContext context, Handler<AsyncResult<JsonObject>> resultHandler) {
         ChainExector.execute(chain, context, vertx, resultHandler);
@@ -331,5 +350,18 @@ public class AnnotationApplicationContext implements ApplicationContext {
     @Override
     public RunContext runContxt() {
         return this.runContext;
+    }
+
+
+    private void listener() {
+
+        eventBus.addOutboundInterceptor(i -> {
+            Message message = i.message();
+            logger.info("Address : " + message.address());
+            logger.info("Header : " + message.headers());
+            logger.info("Body : " + message.body());
+            logger.info("---------------------------------------------------");
+            i.next();
+        });
     }
 }

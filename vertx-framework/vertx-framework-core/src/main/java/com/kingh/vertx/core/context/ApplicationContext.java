@@ -35,11 +35,11 @@ public interface ApplicationContext {
     Vertx vertx();
 
     /**
-     * 执行链
+     * 执行链，静态链-->动态链
      *
-     * @param chain
-     * @param context
-     * @param resultHandler
+     * @param chain         链的定义
+     * @param context       路由上下文
+     * @param resultHandler 执行结果处理器
      */
     void execChain(ChainBean chain, RoutingContext context, Handler<AsyncResult<JsonObject>> resultHandler);
 
