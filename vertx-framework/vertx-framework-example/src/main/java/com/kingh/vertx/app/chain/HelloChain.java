@@ -25,7 +25,8 @@ public class HelloChain {
         chain.setPath("/hello");
 
         LinkedList<ServiceBean> services = new LinkedList<>();
-        services.addFirst(ApplicationContextHolder.getApplicationContext().service("CoreServiceVerticle:hello"));
+        services.addLast(ApplicationContextHolder.getApplicationContext().service("CoreServiceVerticle:hello"));
+        services.addLast(ApplicationContextHolder.getApplicationContext().service("CoreServiceVerticle:world"));
 
         chain.setServices(services);
         return chain;
