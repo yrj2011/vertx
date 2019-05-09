@@ -17,7 +17,6 @@ import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
-import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -71,7 +70,6 @@ public class AnnotationApplicationContext implements ApplicationContext {
         this.chains = new CopyOnWriteArrayList<>();
         this.runContext = new RunContextImpl();
         this.eventBus = vertx.eventBus();
-        listener();
         ApplicationContextHolder.setApplicationContext(this);
     }
 
@@ -350,18 +348,5 @@ public class AnnotationApplicationContext implements ApplicationContext {
     @Override
     public RunContext runContxt() {
         return this.runContext;
-    }
-
-
-    private void listener() {
-
-        eventBus.addOutboundInterceptor(i -> {
-            Message message = i.message();
-            logger.info("Address : " + message.address());
-            logger.info("Header : " + message.headers());
-            logger.info("Body : " + message.body());
-            logger.info("---------------------------------------------------");
-            i.next();
-        });
     }
 }
